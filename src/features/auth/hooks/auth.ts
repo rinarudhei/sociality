@@ -16,8 +16,8 @@ export const useRegister = (toggleIsLoginPage: () => void) => {
   return useMutation({
     mutationFn: (body: RegisterApiParams) => register(body),
     onSuccess: (_: RegisterResponse) => {
-      toggleIsLoginPage();
       toast.success('Register user success');
+      toggleIsLoginPage();
     },
     onError: (e) => {
       toast.error(`Failed register user, please try again`);

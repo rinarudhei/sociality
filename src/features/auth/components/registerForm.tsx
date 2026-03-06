@@ -57,23 +57,6 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
     >
       <FieldGroup>
         <Controller
-          name='name'
-          control={registerForm.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor='form-login-name'>Name</FieldLabel>
-              <Input
-                {...field}
-                id='form-login-name'
-                aria-invalid={fieldState.invalid}
-                placeholder=''
-                autoComplete='off'
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
           name='email'
           control={registerForm.control}
           render={({ field, fieldState }) => (
@@ -83,7 +66,25 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
                 {...field}
                 id='form-login-email'
                 aria-invalid={fieldState.invalid}
-                placeholder=''
+                placeholder='Enter your email'
+                autoComplete='off'
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        <Controller
+          name='name'
+          control={registerForm.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor='form-login-name'>Username</FieldLabel>
+              <Input
+                {...field}
+                id='form-login-name'
+                aria-invalid={fieldState.invalid}
+                placeholder='Enter your username'
                 autoComplete='off'
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -96,13 +97,13 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor='form-login-phone-number'>
-                Nomor Handphone
+                Number Phone
               </FieldLabel>
               <Input
                 {...field}
                 id='form-login-phone-number'
                 aria-invalid={fieldState.invalid}
-                placeholder=''
+                placeholder='Etner your number phone'
                 autoComplete='off'
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -120,7 +121,7 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
                   {...field}
                   id='form-login-password'
                   type={showPassword ? 'text' : 'password'}
-                  placeholder=''
+                  placeholder='Enter your password'
                   className='h-12'
                   aria-invalid={fieldState.invalid}
                 />
@@ -162,7 +163,7 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
                   {...field}
                   id='form-login-confirm-password'
                   type={showPassword ? 'text' : 'password'}
-                  placeholder=''
+                  placeholder='Enter your confirm password'
                   className='h-12'
                   aria-invalid={fieldState.invalid}
                 />
@@ -200,10 +201,10 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
       >
         {isPending ? <Spinner /> : 'Submit'}
       </Button>
-      <p className='sm:text-md text-center text-sm font-semibold -tracking-[0.02rem] text-neutral-950'>
+      <p className='sm:text-md text-neutral-25 text-center text-sm font-semibold -tracking-[0.02rem]'>
         Already have an account?{' '}
         <span
-          className='text-primary-300 cursor-pointer font-bold -tracking-[0.02rem]'
+          className='text-primary-200 cursor-pointer font-bold -tracking-[0.02rem]'
           onClick={toggleForm}
         >
           Log In
