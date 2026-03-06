@@ -307,7 +307,7 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-neutral-25 bg-black;
   }
 }
 

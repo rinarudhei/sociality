@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import QueryProvider from '@/providers/queryProvider';
+import StoreProvider from '@/providers/storeProvider';
+import { Toaster } from 'sonner';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,7 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' data-scroll-behavior='smooth'>
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} antialiased`}>
+        <StoreProvider>
+          <QueryProvider>
+            <Toaster />
+            {children}
+          </QueryProvider>
+        </StoreProvider>
+      </body>
     </html>
   );
 }
