@@ -16,7 +16,7 @@ export default function Auth() {
     setIsLoginPage((prev) => !prev);
   };
   return (
-    <Card className='w-full max-w-86.25 sm:max-w-111.5 sm:gap-5 lg:gap-6'>
+    <Card className='z-50 w-full max-w-86.25 sm:max-w-111.5 sm:gap-5 lg:gap-6'>
       <Sociality />
       <h1 className='sm:text-display-xs text-neutral-25 text-center text-xl font-bold -tracking-[0.02rem] sm:tracking-normal'>
         {isLoginPage ? 'Welcome Back!' : 'Register'}

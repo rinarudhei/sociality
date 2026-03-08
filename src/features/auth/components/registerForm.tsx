@@ -32,9 +32,9 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
   const registerForm = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      username: '',
+      phone: '',
       name: '',
-      phoneNumber: '',
-      email: '',
       password: '',
       confirmPassword: '',
     },
@@ -42,9 +42,10 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
 
   function onSubmit(data: z.infer<typeof registerSchema>) {
     mutate({
+      username: data.username,
       name: data.name,
-      email: data.email,
-      phone: data.phoneNumber,
+      email: data.name,
+      phone: data.phone,
       password: data.password,
     });
   }
@@ -57,11 +58,11 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
     >
       <FieldGroup>
         <Controller
-          name='email'
+          name='name'
           control={registerForm.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor='form-login-email'>Email</FieldLabel>
+              <FieldLabel htmlFor='form-login-email'>Name</FieldLabel>
               <Input
                 {...field}
                 id='form-login-email'
@@ -75,7 +76,7 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
         />
 
         <Controller
-          name='name'
+          name='username'
           control={registerForm.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -92,7 +93,7 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
           )}
         />
         <Controller
-          name='phoneNumber'
+          name='phone'
           control={registerForm.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
@@ -134,13 +135,13 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
                       <Eye
                         width={20}
                         height={20}
-                        className='text-neutral-950'
+                        className='text-neutral-500'
                       />
                     ) : (
                       <EyeOff
                         width={20}
                         height={20}
-                        className='text-neutral-950'
+                        className='text-neutral-500'
                       />
                     )}
                   </div>
@@ -176,13 +177,13 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
                       <Eye
                         width={20}
                         height={20}
-                        className='text-neutral-950'
+                        className='text-neutral-500'
                       />
                     ) : (
                       <EyeOff
                         width={20}
                         height={20}
-                        className='text-neutral-950'
+                        className='text-neutral-500'
                       />
                     )}
                   </div>

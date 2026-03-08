@@ -4,7 +4,7 @@ import Auth from './auth/partials/auth';
 export default function Home() {
   return (
     <div>
-      <Auth />
+      <h1>HELLO WORLD</h1>
     </div>
   );
 }

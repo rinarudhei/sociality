@@ -18,8 +18,9 @@ export type RegisterResponse = {
 };
 
 export type RegisterApiParams = {
-  name: string;
+  username: string;
   email: string;
+  name: string;
   phone: string;
   password: string;
 };

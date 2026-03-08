@@ -2,18 +2,18 @@ import * as z from 'zod';
 
 export const registerSchema = z
   .object({
-    name: z
+    username: z
       .string()
       .min(1, { message: 'Name is required' })
       .max(255, { message: 'Name must be less than 255 characters' })
       .trim(),
-    email: z
+    name: z
       .email({ message: 'Please enter a valid email address' })
       .min(1, { message: 'Email is required' })
       .max(255, { message: 'Email must be less than 255 characters' })
       .trim()
       .toLowerCase(),
-    phoneNumber: z
+    phone: z
       .string()
       .min(1, 'Phone number is required')
       .regex(/^\+[1-9]\d{1,14}$/, {
