@@ -126,12 +126,10 @@ export const Navbar = () => {
           {isLoggedIn && (
             <DropdownMenu>
               <DropdownMenuTrigger className='flex-center cursor-pointer gap-4'>
-                <Avatar size='default'>
+                <Avatar size='default' className='sm:size-12'>
                   <AvatarImage
                     src={user.profilePhoto}
                     alt='User Profile Picture'
-                    width={40}
-                    height={40}
                     className='object-contain'
                   />
                   <AvatarFallback>
