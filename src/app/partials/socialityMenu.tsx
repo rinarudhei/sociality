@@ -1,4 +1,4 @@
-import { CirclePlus, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import Image from 'next/image';
 
 export const SocialityMenu = () => {

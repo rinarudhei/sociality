@@ -69,6 +69,7 @@ export const PostCard = ({
             width={600}
             height={600}
             className='absolute h-full w-full rounded-md object-fill'
+            loading='eager'
           />
         </div>
       </div>
