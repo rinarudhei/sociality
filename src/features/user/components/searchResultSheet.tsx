@@ -29,7 +29,7 @@ export const SearchResultSheet = ({
   );
 
   return (
-    <div className='absolute top-16.25 flex h-screen w-screen flex-col bg-black py-4'>
+    <div className='absolute top-16.25 left-0 flex h-screen w-screen flex-col bg-black py-4'>
       {isError ? (
         <ErrorMessage errorMessage='Search users failed' />
       ) : (
@@ -40,7 +40,7 @@ export const SearchResultSheet = ({
             <Spinner />
           ) : data.users.length === 0 ? (
             <div
-              className='flex-center flex h-38.75 w-110 flex-col gap-1'
+              className='flex-center absolute top-1/2 flex h-38.75 w-110 -translate-y-[calc(77px+64px)] flex-col gap-1'
               onClick={() => setShowSearchResult(false)}
             >
               <h3 className='text-md text-neutral-25 text-center font-bold -tracking-[0.02rem]'>
