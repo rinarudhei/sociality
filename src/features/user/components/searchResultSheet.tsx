@@ -19,7 +19,6 @@ export const SearchResultSheet = ({
   showSearchResult,
   setShowSearchResult,
 }: SearchResultSheet) => {
-  const isLargish = useMedia({ minWidth: '640px' });
   const { data, isPending, isFetching, isError } = useSearchUser(
     {
       q: query,
@@ -28,12 +27,6 @@ export const SearchResultSheet = ({
     },
     showSearchResult
   );
-
-  React.useEffect(() => {
-    if (isLargish) {
-      setShowSearchResult(false);
-    }
-  }, [isLargish]);
 
   return (
     <div className='absolute top-16.25 flex h-screen w-screen flex-col bg-black py-4'>

@@ -207,7 +207,7 @@ export const Navbar = () => {
       )}
 
       {/* Search input field */}
-      {openSearchField && (
+      {openSearchField && !isLargeIsh && (
         <div className='flex w-screen items-center justify-between gap-4 px-4 py-3'>
           <SearchResultSheet
             setShowSearchResult={setShowSearchResult}
