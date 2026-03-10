@@ -15,7 +15,7 @@ export type Post = {
   author: Author;
   likeCount: number;
   commentCount: number;
-  likedByMe: number;
+  likedByMe: boolean;
 };
 
 export type Author = {

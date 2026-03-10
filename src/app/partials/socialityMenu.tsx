@@ -1,7 +1,6 @@
 'use client';
 import clsx from 'clsx';
 import { Plus } from 'lucide-react';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export const SocialityMenu = () => {
@@ -10,7 +9,7 @@ export const SocialityMenu = () => {
     <div className='fixed bottom-4 flex h-16 w-86.25 items-center justify-around rounded-full border border-neutral-900 bg-neutral-950 shadow-sm sm:bottom-8 sm:h-20 sm:w-90'>
       {/* Go Home Menu */}
       <div className='flex w-23.5 flex-col items-center gap-0.5 sm:gap-1'>
-        <div className='flex-center size-6'>
+        <div className='flex-center size-6 cursor-pointer'>
           <svg
             width='24'
             height='24'
@@ -27,21 +26,22 @@ export const SocialityMenu = () => {
         <div
           className={clsx(
             'sm:text-md text-center text-xs font-normal tracking-normal sm:-tracking-[0.02rem]',
-            pathname === '/' ? 'text-primary-200' : 'text-neutral-25'
+            pathname === '/' ? 'text-primary-200' : 'text-neutral-25',
+            'cursor-pointer'
           )}
         >
           Home
         </div>
       </div>
       {/* Add Post Menu */}
-      <div className='bg-primary-300 flex-center size-11 rounded-full border-none sm:size-12'>
+      <div className='bg-primary-300 flex-center size-11 cursor-pointer rounded-full border-none sm:size-12'>
         <Plus className='size-5.5 sm:size-6' />
       </div>
 
       {/* Go Profile Menu */}
 
       <div className='flex w-23.5 flex-col items-center gap-0.5 sm:gap-1'>
-        <div className='flex-center size-6'>
+        <div className='flex-center size-6 cursor-pointer'>
           <svg
             width='24'
             height='24'
@@ -60,7 +60,8 @@ export const SocialityMenu = () => {
           className={clsx(
             'text-neutral-25 sm:text-md text-center text-xs font-normal tracking-normal sm:-tracking-[0.02rem]',
 
-            pathname === '/profile' ? 'text-primary-200' : 'text-neutral-25'
+            pathname === '/profile' ? 'text-primary-200' : 'text-neutral-25',
+            'cursor-pointer'
           )}
         >
           Profile
