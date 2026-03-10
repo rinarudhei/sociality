@@ -80,12 +80,26 @@ export const PostCard = ({
         <div className='sm:text-md text-neutral-25 flex items-center gap-3 text-sm font-semibold -tracking-[0.02rem] sm:gap-4'>
           <div className='flex items-center gap-1.5'>
             <div className='h-6 w-6'>
-              <Image
-                src='/svg/Like Icon.svg'
-                alt='comment icon svg'
-                width={24}
-                height={24}
-              />
+              <svg
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                className={clsx(
+                  likedByMe
+                    ? 'fill-red stroke-none'
+                    : 'stroke-neutral-25 fill-none'
+                )}
+              >
+                <path
+                  d='M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z'
+                  stroke='#FDFDFD'
+                  strokeWidth='1.5'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+              </svg>
             </div>
             <p>{likeCount}</p>
           </div>
