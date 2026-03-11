@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from '../../../components/ui/dialog';
-import { useSearchUser } from '../hooks/user';
+import { useSearchUser } from '../hooks/queries';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import React, { SetStateAction } from 'react';
 import { VisuallyHidden } from 'radix-ui';

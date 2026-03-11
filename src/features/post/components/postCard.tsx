@@ -4,16 +4,17 @@ import { Author, GetPostsResponse } from '../types/post';
 import { generateUploadTimeDiffString } from '@/lib/utils';
 import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
-import { useLikeAPost, useUnlikeAPost } from '@/features/likes/hooks/likePost';
+import { useLikeAPost, useUnlikeAPost } from '@/features/likes/hooks/mutations';
 import { useAppSelector } from '@/stores/store';
 import { ViewLikes } from '@/features/likes/components/viewLikes';
+import { ViewComments } from '@/features/comments/components/viewComments';
 
 type PostCardProps = {
   id: number;
   imageUrl: string;
   caption: string;
   createdAt: string;
-  author: Partial<Author>;
+  author: Author;
   likeCount: number;
   commentCount: number;
   likedByMe: boolean;
@@ -38,9 +39,9 @@ export const PostCard = ({
     React.useState(commentCount);
 
   const [triggerFetchLikes, setTriggerFetchLikes] = React.useState(false);
+  const [triggerFetchComments, setTriggerFetchComments] = React.useState(false);
 
   const { mutate } = useLikeAPost(
-    auth.token,
     {
       setLikeCount: setLikeCountClient,
       setLikedByMe: setLikedByMeClient,
@@ -50,7 +51,6 @@ export const PostCard = ({
   );
 
   const { mutate: mutateUnlike } = useUnlikeAPost(
-    auth.token,
     {
       setLikeCount: setLikeCountClient,
       setLikedByMe: setLikedByMeClient,
@@ -150,17 +150,27 @@ export const PostCard = ({
               <p className='cursor-pointer'>{likeCountClient}</p>
             </ViewLikes>
           </div>
-          <div className='flex cursor-pointer items-center gap-1.5'>
-            <div className='h-6 w-6'>
-              <Image
-                src='/svg/Comment Icon.svg'
-                alt='comment icon svg'
-                width={24}
-                height={24}
-              />
+          <ViewComments
+            imageUrl={imageUrl}
+            author={author}
+            triggerFetch={triggerFetchComments}
+            setTriggerFetch={setTriggerFetchComments}
+            id={id}
+            caption={caption}
+            uploadedAt={createdAt}
+          >
+            <div className='flex cursor-pointer items-center gap-1.5'>
+              <div className='h-6 w-6'>
+                <Image
+                  src='/svg/Comment Icon.svg'
+                  alt='comment icon svg'
+                  width={24}
+                  height={24}
+                />
+              </div>
+              <p>{commentCountClient}</p>
             </div>
-            <p>{commentCountClient}</p>
-          </div>
+          </ViewComments>
           <div className='h-6 w-6 cursor-pointer'>
             <Image
               src='/svg/Share Icon.svg'

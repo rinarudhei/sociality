@@ -2,7 +2,7 @@
 
 import ErrorMessage from '@/components/container/errorMessage';
 import React, { SetStateAction } from 'react';
-import { useSearchUser } from '../hooks/user';
+import { useSearchUser } from '../hooks/queries';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Spinner } from '@/components/ui/spinner';
 import { generateAvatarFallback } from '@/lib/utils';

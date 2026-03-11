@@ -7,9 +7,11 @@ import { likeAPost, unlikeAPost } from '../services/likes';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import React, { SetStateAction } from 'react';
+import { LikeAPostResponse } from '../types/likes';
+import { AxiosError, HttpStatusCode } from 'axios';
+import { ApiErrorResponse } from '@/types/api';
 
 export const useLikeAPost = (
-  token: string,
   actions: {
     setLikedByMe: React.Dispatch<SetStateAction<boolean>>;
     setLikeCount: React.Dispatch<SetStateAction<number>>;
@@ -20,19 +22,27 @@ export const useLikeAPost = (
   const router = useRouter();
   const queryClient = new QueryClient();
 
-  if (token === '') {
-    router.push('/auth');
-  }
-
-  return useMutation({
+  return useMutation<
+    LikeAPostResponse,
+    AxiosError,
+    { token: string; id: number },
+    void
+  >({
     mutationFn: likeAPost,
     onMutate: () => {
       actions.setLikeCount((prev) => prev + 1);
       actions.setLikedByMe(true);
       actions.setTriggerFetch(true);
     },
-    onError: () => {
-      toast.error('Failed to like a post. Please try again later');
+    onError: (e) => {
+      if (e.status === HttpStatusCode.Unauthorized) {
+        toast.error('Please login first');
+        actions.setLikedByMe(false);
+        actions.setLikeCount((prev) => prev - 1);
+        router.push('/auth');
+      } else {
+        toast.error('Failed to like a post. Please try again later');
+      }
     },
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ['likes-byPostId'] });
@@ -42,7 +52,6 @@ export const useLikeAPost = (
 };
 
 export const useUnlikeAPost = (
-  token: string,
   actions: {
     setLikedByMe: React.Dispatch<SetStateAction<boolean>>;
     setLikeCount: React.Dispatch<SetStateAction<number>>;
@@ -53,19 +62,27 @@ export const useUnlikeAPost = (
   const router = useRouter();
   const queryClient = new QueryClient();
 
-  if (token === '') {
-    router.push('/auth');
-  }
-
-  return useMutation({
+  return useMutation<
+    LikeAPostResponse,
+    AxiosError<ApiErrorResponse>,
+    { token: string; id: number },
+    void
+  >({
     mutationFn: unlikeAPost,
     onMutate: () => {
       actions.setLikeCount((prev) => prev - 1);
       actions.setLikedByMe(false);
       actions.setTriggerFetch(true);
     },
-    onError: () => {
-      toast.error('Failed to like a post. Please try again later');
+    onError: (e) => {
+      if (e.status === HttpStatusCode.Unauthorized) {
+        toast.error('Please login first');
+        actions.setLikedByMe(true);
+        actions.setLikeCount((prev) => prev + 1);
+        router.push('/auth');
+      } else {
+        toast.error('Failed to unlike a post. Please try again later');
+      }
     },
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ['likes-byPostId'] });

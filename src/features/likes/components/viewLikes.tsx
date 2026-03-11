@@ -7,7 +7,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import React, { SetStateAction } from 'react';
-import { useGetLikesByPostId } from '../hooks/getLikes';
+import { useGetLikesByPostId } from '../hooks/queries';
 import { useAppSelector } from '@/stores/store';
 import { VisuallyHidden } from 'radix-ui';
 import ErrorMessage from '@/components/container/errorMessage';
@@ -103,7 +103,7 @@ export const ViewLikes = ({
                             <h4 className='text-neutral-25 w-full text-sm font-bold -tracking-[0.01rem]'>
                               {user.name}
                             </h4>
-                            <p className='-trakcing-[0.02rem] w-full text-sm font-normal text-neutral-400'>
+                            <p className='w-full text-sm font-normal -tracking-[0.02rem] text-neutral-400'>
                               {user.username}
                             </p>
                           </div>
