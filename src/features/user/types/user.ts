@@ -13,5 +13,5 @@ export type User = {
   username: string;
   name: string;
   avatarUrl: string;
-  isFollowedByMe: false;
+  isFollowedByMe: boolean;
 };

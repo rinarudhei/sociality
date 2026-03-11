@@ -13,7 +13,9 @@ export const useLikeAPost = (
   actions: {
     setLikedByMe: React.Dispatch<SetStateAction<boolean>>;
     setLikeCount: React.Dispatch<SetStateAction<number>>;
-  }
+    setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
+  },
+  id: number
 ) => {
   const router = useRouter();
   const queryClient = new QueryClient();
@@ -27,12 +29,14 @@ export const useLikeAPost = (
     onMutate: () => {
       actions.setLikeCount((prev) => prev + 1);
       actions.setLikedByMe(true);
+      actions.setTriggerFetch(true);
     },
     onError: () => {
       toast.error('Failed to like a post. Please try again later');
     },
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ['likes-byPostId'] });
+      queryClient.invalidateQueries({ queryKey: ['likes', id] });
     },
   });
 };
@@ -42,7 +46,9 @@ export const useUnlikeAPost = (
   actions: {
     setLikedByMe: React.Dispatch<SetStateAction<boolean>>;
     setLikeCount: React.Dispatch<SetStateAction<number>>;
-  }
+    setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
+  },
+  id: number
 ) => {
   const router = useRouter();
   const queryClient = new QueryClient();
@@ -56,12 +62,14 @@ export const useUnlikeAPost = (
     onMutate: () => {
       actions.setLikeCount((prev) => prev - 1);
       actions.setLikedByMe(false);
+      actions.setTriggerFetch(true);
     },
     onError: () => {
       toast.error('Failed to like a post. Please try again later');
     },
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ['likes-byPostId'] });
+      queryClient.invalidateQueries({ queryKey: ['likes', id] });
     },
   });
 };

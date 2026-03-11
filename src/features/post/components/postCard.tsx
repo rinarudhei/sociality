@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
 import { useLikeAPost, useUnlikeAPost } from '@/features/likes/hooks/likePost';
 import { useAppSelector } from '@/stores/store';
-import { useQueryClient } from '@tanstack/react-query';
+import { ViewLikes } from '@/features/likes/components/viewLikes';
 
 type PostCardProps = {
   id: number;
@@ -37,15 +37,27 @@ export const PostCard = ({
   const [commentCountClient, setCommentCountClient] =
     React.useState(commentCount);
 
-  const { mutate } = useLikeAPost(auth.token, {
-    setLikeCount: setLikeCountClient,
-    setLikedByMe: setLikedByMeClient,
-  });
+  const [triggerFetchLikes, setTriggerFetchLikes] = React.useState(false);
 
-  const { mutate: mutateUnlike } = useUnlikeAPost(auth.token, {
-    setLikeCount: setLikeCountClient,
-    setLikedByMe: setLikedByMeClient,
-  });
+  const { mutate } = useLikeAPost(
+    auth.token,
+    {
+      setLikeCount: setLikeCountClient,
+      setLikedByMe: setLikedByMeClient,
+      setTriggerFetch: setTriggerFetchLikes,
+    },
+    id
+  );
+
+  const { mutate: mutateUnlike } = useUnlikeAPost(
+    auth.token,
+    {
+      setLikeCount: setLikeCountClient,
+      setLikedByMe: setLikedByMeClient,
+      setTriggerFetch: setTriggerFetchLikes,
+    },
+    id
+  );
   useEffect(() => {
     const checkClamp = () => {
       const element = captionRef.current;
@@ -130,7 +142,13 @@ export const PostCard = ({
                 />
               </svg>
             </div>
-            <p>{likeCountClient}</p>
+            <ViewLikes
+              id={id}
+              triggerFetch={triggerFetchLikes}
+              setTriggerFetch={setTriggerFetchLikes}
+            >
+              <p className='cursor-pointer'>{likeCountClient}</p>
+            </ViewLikes>
           </div>
           <div className='flex cursor-pointer items-center gap-1.5'>
             <div className='h-6 w-6'>

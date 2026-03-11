@@ -33,7 +33,7 @@ export const HomeContent = () => {
   ) : status === 'error' ? (
     <ErrorMessage errorMessage='Error loading posts' />
   ) : (
-    <div className='absolute top-[calc(64px+16px)] flex flex-col items-center justify-start gap-4 overflow-y-scroll [-ms-overflow-style:none] [scrollbar-width:none] sm:top-[calc(80px+16px)] sm:gap-6 [&::-webkit-scrollbar]:hidden'>
+    <div className='absolute top-[calc(64px+16px)] flex flex-col items-center justify-start gap-4 overflow-x-scroll overflow-y-scroll [-ms-overflow-style:none] [scrollbar-width:none] sm:top-[calc(80px+16px)] sm:gap-6 [&::-webkit-scrollbar]:hidden'>
       {data.pages.map((group, i) => (
         <React.Fragment key={i}>
           {group.posts.map((post, j) => (
