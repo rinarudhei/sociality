@@ -101,7 +101,7 @@ export const PostCard = ({
         </div>
 
         {/* post image */}
-        <div className='relative h-90.25 w-90.25 sm:h-150 sm:w-150'>
+        <div className='relative h-90.25 w-screen max-w-90.25 sm:h-150 sm:w-150 sm:max-w-full'>
           <Image
             src={imageUrl}
             alt='Post Image'

@@ -68,9 +68,9 @@ function SheetContent({
           side === 'top' &&
             'data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 h-auto border-b',
           side === 'bottom' &&
-            'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-139.5 pt-8',
+            'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 h-fit max-h-[65%] pt-8',
           side === 'bottom' &&
-            'sm:data-[state=closed]:fade-out sm:data-[state=open]:fade-in sm:top-1/2 sm:left-1/2 sm:h-142.5 sm:w-full sm:max-w-137 sm:-translate-x-[50%] sm:-translate-y-[50%] sm:duration-100',
+            'sm:data-[state=closed]:fade-out sm:data-[state=open]:fade-in sm:top-1/2 sm:left-1/2 sm:h-fit sm:max-h-180 sm:w-full sm:max-w-137 sm:-translate-x-[50%] sm:-translate-y-[50%] sm:duration-100 xl:h-full',
           className
         )}
         {...props}

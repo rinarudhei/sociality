@@ -51,12 +51,12 @@ export const CommentList = ({
 
   return isError ? (
     <ErrorMessage errorMessage='Failed loading user data' />
-  ) : isPending || isFetching ? (
-    <Spinner />
+  ) : isPending ? (
+    <Spinner className='mx-auto text-white' />
   ) : (
     <>
       {data.pages.length === 0 || data.pages[0].comments.length === 0 ? (
-        <div className='flex-center mx-auto h-full max-h-38.75 w-full max-w-90.25 flex-col gap-1'>
+        <div className='flex-center mx-auto h-38.75 w-full max-w-90.25 flex-col gap-1 xl:absolute xl:bottom-28.25 xl:left-1/2 xl:-translate-x-[50%]'>
           <p className='text-neutral-25 text-md text-center font-bold -tracking-[0.02rem]'>
             No Comments yet
           </p>
@@ -65,12 +65,12 @@ export const CommentList = ({
           </p>
         </div>
       ) : (
-        <ul className='flex h-full w-full flex-col gap-5'>
+        <ul className='flex h-full max-h-100 w-full flex-col gap-5 overflow-y-scroll sm:max-h-80'>
           {data.pages.map((group, i) => (
             <React.Fragment key={i}>
-              {group.comments.map((comment) => (
+              {group.comments.map((comment, j, arr) => (
                 <li key={comment.id} className='flex w-full flex-col gap-3'>
-                  <div className='flex w-full flex-col gap-2.5'>
+                  <div className='flex w-full flex-col gap-2 sm:gap-2.5'>
                     <div className='flex-center w-full gap-2'>
                       <Avatar className='size-10'>
                         <AvatarImage
@@ -84,7 +84,7 @@ export const CommentList = ({
                         </AvatarFallback>
                       </Avatar>
 
-                      <div className='flex h-10.5 w-full flex-col items-center gap-0'>
+                      <div className='flex h-11 w-full flex-col items-center gap-0 sm:h-10.5'>
                         <h4 className='text-neutral-25 w-full text-xs font-semibold tracking-normal sm:text-sm sm:font-bold sm:-tracking-[0.01rem]'>
                           {comment.author.name}
                         </h4>
