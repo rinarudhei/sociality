@@ -11,8 +11,6 @@ import React, { SetStateAction } from 'react';
 import { useGetCommentsByPostId } from '../hooks/queries';
 import { useAppSelector } from '@/stores/store';
 import { VisuallyHidden } from 'radix-ui';
-import ErrorMessage from '@/components/container/errorMessage';
-import { Spinner } from '@/components/ui/spinner';
 import { AvatarImage, AvatarFallback, Avatar } from '@/components/ui/avatar';
 import {
   generateAvatarFallback,
@@ -22,8 +20,8 @@ import { useOnInView } from 'react-intersection-observer';
 import { Separator } from '@/components/ui/separator';
 import { Author } from '@/features/post/types/post';
 import { Ellipsis } from 'lucide-react';
-import { group } from 'console';
 import Image from 'next/image';
+import { CommentList } from './comentList';
 
 type ViewCommentsProps = {
   children: React.ReactNode;
@@ -91,7 +89,7 @@ export const ViewComments = ({
             className='h-full w-full object-fill'
           />
         </div>
-        <div className='flex h-full w-full max-w-120 flex-col gap-3 overflow-y-scroll bg-neutral-950 px-4 pt-4 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] xl:h-180 [&::-webkit-scrollbar]:hidden'>
+        <div className='flex h-full w-full flex-col gap-3 overflow-y-scroll bg-neutral-950 px-4 pt-4 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] xl:h-180 xl:max-w-120 [&::-webkit-scrollbar]:hidden'>
           <SheetHeader className='m-0 hidden w-full flex-col gap-2 p-0 sm:flex'>
             <div className='flex-center h-11.5 w-full items-center gap-2'>
               <Avatar className='size-10'>
@@ -132,77 +130,12 @@ export const ViewComments = ({
                 List of user who likes this post
               </VisuallyHidden.Root>
             </SheetDescription>
-
-            {isError ? (
-              <ErrorMessage errorMessage='Failed loading user data' />
-            ) : isPending || isFetching ? (
-              <Spinner />
-            ) : (
-              <>
-                {data.pages.length === 0 ||
-                data.pages[0].comments.length === 0 ? (
-                  <div className='flex-center mx-auto h-full max-h-38.75 w-full max-w-90.25 flex-col gap-1'>
-                    <p className='text-neutral-25 text-md text-center font-bold -tracking-[0.02rem]'>
-                      No Comments yet
-                    </p>
-                    <p className='text-center text-sm font-normal -tracking-[0.02rem] text-neutral-400'>
-                      Start the conversation
-                    </p>
-                  </div>
-                ) : (
-                  <ul className='flex h-full w-full flex-col gap-5'>
-                    {data.pages.map((group, i) => (
-                      <React.Fragment key={i}>
-                        {group.comments.map((comment) => (
-                          <li
-                            key={comment.id}
-                            className='flex w-full flex-col gap-3'
-                          >
-                            <div className='flex w-full flex-col gap-2.5'>
-                              <div className='flex-center w-full gap-2'>
-                                <Avatar className='size-10'>
-                                  <AvatarImage
-                                    src={comment.author.avatarUrl}
-                                    alt='User Profile Picture'
-                                    className='object-contain'
-                                  />
-
-                                  <AvatarFallback>
-                                    {generateAvatarFallback(
-                                      comment.author.name
-                                    )}
-                                  </AvatarFallback>
-                                </Avatar>
-
-                                <div className='flex h-10.5 w-full flex-col items-center gap-0'>
-                                  <h4 className='text-neutral-25 w-full text-xs font-semibold tracking-normal sm:text-sm sm:font-bold sm:-tracking-[0.01rem]'>
-                                    {comment.author.name}
-                                  </h4>
-                                  <p className='h-4 w-full text-xs font-normal -tracking-[0.03rem] text-neutral-400 sm:tracking-normal'>
-                                    {generateUploadTimeDiffString(
-                                      comment.createdAt
-                                    )}
-                                  </p>
-                                </div>
-                              </div>
-
-                              <p className='text-neutral-25 text-xs font-normal -tracking-[0.03rem] sm:text-sm sm:-tracking-[0.02rem]'>
-                                {comment.text}
-                              </p>
-                            </div>
-                            <Separator className='bg-neutral-900' />
-                          </li>
-                        ))}
-                      </React.Fragment>
-                    ))}
-
-                    <div ref={trackingRef} className='flex-center flex-col'>
-                      {(isFetching || isFetchingNextPage) && <Spinner />}
-                    </div>
-                  </ul>
-                )}
-              </>
-            )}
+            <CommentList
+              isOpen={isOpen}
+              triggerFetch={triggerFetch}
+              setTriggerFetch={setTriggerFetch}
+              id={id}
+            />
           </div>
         </div>
       </SheetContent>

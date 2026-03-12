@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
-import { Author, GetPostsResponse } from '../types/post';
+import { Author } from '../types/post';
 import { generateUploadTimeDiffString } from '@/lib/utils';
 import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
