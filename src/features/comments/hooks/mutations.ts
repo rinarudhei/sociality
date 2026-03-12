@@ -65,7 +65,7 @@ export const useDeleteComment = (
       actions.setCommentCount((prev) => prev - 1);
       actions.setTriggerFetch(true);
     },
-    onError: () => {
+    onError: (e) => {
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
       } else {

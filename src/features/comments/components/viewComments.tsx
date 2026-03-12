@@ -79,7 +79,7 @@ export const ViewComments = ({
       <SheetTrigger>{children}</SheetTrigger>
       <SheetContent
         side='bottom'
-        className='w-full overflow-y-scroll xl:h-180 xl:h-full xl:w-300 xl:max-w-300 xl:flex-row xl:gap-0'
+        className='w-full overflow-y-scroll xl:h-180 xl:w-300 xl:max-w-300 xl:flex-row xl:gap-0'
       >
         <div className='hidden h-180 w-180 xl:inline-block'>
           <Image
