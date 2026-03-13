@@ -26,7 +26,6 @@ import { useRouter } from 'next/navigation';
 import { Sociality } from './sociality';
 import { SearchResultDialog } from '@/features/user/components/searchResultDialog';
 import Image from 'next/image';
-import { setServers } from 'dns';
 import { SearchResultSheet } from '@/features/user/components/searchResultSheet';
 
 export const Navbar = () => {
