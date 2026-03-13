@@ -27,12 +27,14 @@ import {
 } from '@/components/ui/input-group';
 import { Button } from '@/components/ui/button';
 import clsx from 'clsx';
+import { useAddComment } from '../hooks/mutations';
 
 type ViewCommentsProps = {
   children: React.ReactNode;
   id: number;
   triggerFetch: boolean;
   setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
+  setCommentCount: React.Dispatch<SetStateAction<number>>;
   author: Author;
   uploadedAt: string;
   caption: string;
@@ -44,6 +46,7 @@ export const ViewComments = ({
   id,
   triggerFetch,
   setTriggerFetch,
+  setCommentCount,
   author,
   uploadedAt,
   caption,
@@ -52,6 +55,14 @@ export const ViewComments = ({
   const auth = useAppSelector((state) => state.auth);
   const [isOpen, setisOpen] = React.useState(false);
   const [textComment, setTextComment] = React.useState('');
+  const { mutate } = useAddComment(
+    { setCommentCount, setTriggerFetch, setTextComment },
+    id
+  );
+
+  const handleSubmit = () => {
+    mutate({ id, text: textComment, token: auth.token });
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setisOpen}>
@@ -70,7 +81,7 @@ export const ViewComments = ({
             className='h-full w-full object-fill'
           />
         </div>
-        <div className='relative flex h-full w-full flex-col justify-end gap-3 bg-neutral-950 px-4 pt-4 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] sm:max-h-180 sm:gap-4 sm:pb-5 xl:max-h-full xl:min-h-180 xl:max-w-120 xl:justify-between [&::-webkit-scrollbar]:hidden'>
+        <div className='relative flex h-full w-full flex-col justify-end gap-3 bg-neutral-950 px-4 pt-4 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] sm:max-h-180 sm:gap-4 sm:pb-5 xl:max-h-full xl:min-h-180 xl:max-w-120 xl:justify-start [&::-webkit-scrollbar]:hidden'>
           <SheetHeader className='m-0 hidden max-h-[194px] min-h-[194px] w-full flex-col gap-2 p-0 sm:flex'>
             <div className='flex-center h-11.5 w-full items-center gap-2'>
               <Avatar className='size-10'>
@@ -121,15 +132,16 @@ export const ViewComments = ({
           </div>
 
           {auth.token !== '' && (
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-4 xl:absolute xl:bottom-5'>
               <div className='flex gap-2'>
                 <div className='flex-center h-12 w-12 gap-2 rounded-xl border border-neutral-900 p-3'>
                   <Smile size={24} className='h-full w-full' />
                 </div>
 
-                <InputGroup className='h-12 gap-2 rounded-xl border border-neutral-900 px-4 py-2'>
+                <InputGroup className='h-12 gap-2 rounded-xl border border-neutral-900 px-4 py-2 xl:w-96'>
                   <InputGroupInput
                     id='add-comment'
+                    autoComplete='off'
                     value={textComment}
                     onChange={(e) => setTextComment(e.target.value)}
                     placeholder='Add Comment'
@@ -141,6 +153,7 @@ export const ViewComments = ({
                   >
                     <Button
                       variant='ghost'
+                      onClick={handleSubmit}
                       className={clsx(
                         'w-fit border-none text-right text-sm font-bold -tracking-[0.01rem]',
                         textComment.length > 0

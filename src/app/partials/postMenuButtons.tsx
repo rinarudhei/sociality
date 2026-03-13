@@ -100,6 +100,7 @@ export const PostMenuButtons = ({
           </ViewLikes>
         </div>
         <ViewComments
+          setCommentCount={setCommentCountClient}
           imageUrl={imageUrl}
           author={author}
           triggerFetch={triggerFetchComments}

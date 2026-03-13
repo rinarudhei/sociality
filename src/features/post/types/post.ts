@@ -20,7 +20,7 @@ export type Post = {
 
 export type Author = {
   id: number;
-  username: number;
+  username: string;
   name: string;
   avatarUrl: string;
 };

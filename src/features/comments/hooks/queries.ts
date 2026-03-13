@@ -13,7 +13,7 @@ export const useGetCommentsByPostId = (
   return useInfiniteQuery<GetCommentsByPostIdResponse, AxiosError>({
     initialPageParam: 1,
     enabled: isEnabled,
-    queryKey: ['comments', params.id, params.page, params.limit],
+    queryKey: ['comments', params.id, params.limit],
     queryFn: ({ pageParam }) =>
       getCommentsByPostId({ ...params, page: pageParam as number }),
     getNextPageParam: (responseData) => {

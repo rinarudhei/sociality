@@ -9,6 +9,7 @@ import { useOnInView } from 'react-intersection-observer';
 import { useGetCommentsByPostId } from '../hooks/queries';
 import { Separator } from '@/components/ui/separator';
 import ErrorMessage from '@/components/container/errorMessage';
+import dayjs from 'dayjs';
 
 type CommentListProps = {
   id: number;
@@ -65,7 +66,7 @@ export const CommentList = ({
           </p>
         </div>
       ) : (
-        <ul className='flex h-full max-h-100 w-full flex-col gap-5 overflow-y-scroll sm:max-h-80'>
+        <ul className='flex h-full max-h-80 w-full flex-col gap-5 overflow-y-scroll xl:absolute xl:bottom-25'>
           {data.pages.map((group, i) => (
             <React.Fragment key={i}>
               {group.comments.map((comment, j, arr) => (

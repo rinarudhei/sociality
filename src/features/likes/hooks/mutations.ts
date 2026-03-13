@@ -45,7 +45,6 @@ export const useLikeAPost = (
       }
     },
     onSettled: async () => {
-      queryClient.invalidateQueries({ queryKey: ['likes-byPostId'] });
       queryClient.invalidateQueries({ queryKey: ['likes', id] });
     },
   });
@@ -72,7 +71,6 @@ export const useUnlikeAPost = (
     onMutate: () => {
       actions.setLikeCount((prev) => prev - 1);
       actions.setLikedByMe(false);
-      actions.setTriggerFetch(true);
     },
     onError: (e) => {
       if (e.status === HttpStatusCode.Unauthorized) {
@@ -84,8 +82,10 @@ export const useUnlikeAPost = (
         toast.error('Failed to unlike a post. Please try again later');
       }
     },
+    onSuccess: () => {
+      actions.setTriggerFetch(true);
+    },
     onSettled: async () => {
-      queryClient.invalidateQueries({ queryKey: ['likes-byPostId'] });
       queryClient.invalidateQueries({ queryKey: ['likes', id] });
     },
   });
