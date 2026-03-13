@@ -1,41 +1,32 @@
-import { ViewComments } from '@/features/comments/components/viewComments';
 import { ViewLikes } from '@/features/likes/components/viewLikes';
 import { useLikeAPost, useUnlikeAPost } from '@/features/likes/hooks/mutations';
-import { Author } from '@/features/post/types/post';
 import { useAppSelector } from '@/stores/store';
 import clsx from 'clsx';
 import Image from 'next/image';
-import React from 'react';
+import React, { SetStateAction } from 'react';
 
-type PostMenuButtonsProps = {
+type PostMenuButtonInCommentProps = {
   id: number;
-  likedByMe: boolean;
-  likeCount: number;
-  commentCount: number;
-  author: Author;
-  createdAt: string;
-  caption: string;
-  imageUrl: string;
+  likedByMeClient: boolean;
+  setLikedByMeClient: React.Dispatch<SetStateAction<boolean>>;
+  likeCountClient: number;
+  setLikeCountClient: React.Dispatch<SetStateAction<number>>;
+  commentCountClient: number;
+  triggerFetchLikes: boolean;
+  setTriggerFetchLikes: React.Dispatch<SetStateAction<boolean>>;
 };
 
-export const PostMenuButtons = ({
+export const PostMenuButtonInComment = ({
   id,
-  likedByMe,
-  likeCount,
-  commentCount,
-  author,
-  caption,
-  createdAt,
-  imageUrl,
-}: PostMenuButtonsProps) => {
+  likedByMeClient,
+  setLikedByMeClient,
+  likeCountClient,
+  setLikeCountClient,
+  commentCountClient,
+  triggerFetchLikes,
+  setTriggerFetchLikes,
+}: PostMenuButtonInCommentProps) => {
   const auth = useAppSelector((state) => state.auth);
-  const [likedByMeClient, setLikedByMeClient] = React.useState(likedByMe);
-  const [likeCountClient, setLikeCountClient] = React.useState(likeCount);
-  const [commentCountClient, setCommentCountClient] =
-    React.useState(commentCount);
-
-  const [triggerFetchLikes, setTriggerFetchLikes] = React.useState(false);
-  const [triggerFetchComments, setTriggerFetchComments] = React.useState(false);
 
   const { mutate } = useLikeAPost(
     {
@@ -99,35 +90,17 @@ export const PostMenuButtons = ({
             <p className='cursor-pointer'>{likeCountClient}</p>
           </ViewLikes>
         </div>
-        <ViewComments
-          setCommentCount={setCommentCountClient}
-          imageUrl={imageUrl}
-          author={author}
-          triggerFetch={triggerFetchComments}
-          setTriggerFetch={setTriggerFetchComments}
-          id={id}
-          caption={caption}
-          uploadedAt={createdAt}
-          likeCountClient={likeCountClient}
-          likedByMeClient={likedByMeClient}
-          setLikeCountClient={setLikeCountClient}
-          setLikedByMeClient={setLikedByMeClient}
-          triggerFetchLikes={triggerFetchLikes}
-          setTriggerFetchLikes={setTriggerFetchLikes}
-          commentCountClient={commentCountClient}
-        >
-          <div className='flex cursor-pointer items-center gap-1.5'>
-            <div className='h-6 w-6'>
-              <Image
-                src='/svg/Comment Icon.svg'
-                alt='comment icon svg'
-                width={24}
-                height={24}
-              />
-            </div>
-            <p>{commentCountClient}</p>
+        <div className='flex cursor-pointer items-center gap-1.5'>
+          <div className='h-6 w-6'>
+            <Image
+              src='/svg/Comment Icon.svg'
+              alt='comment icon svg'
+              width={24}
+              height={24}
+            />
           </div>
-        </ViewComments>
+          <p>{commentCountClient}</p>
+        </div>
         <div className='h-6 w-6 cursor-pointer'>
           <Image
             src='/svg/Share Icon.svg'

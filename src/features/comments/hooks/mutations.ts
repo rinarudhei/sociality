@@ -31,9 +31,9 @@ export const useAddComment = (
       actions.setCommentCount((prev) => prev + 1);
     },
     onError: (e) => {
+      actions.setCommentCount((prev) => prev - 1);
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
-        actions.setCommentCount((prev) => prev - 1);
       } else {
         toast.error('Failed to add a comment. Please try again later');
       }
@@ -69,6 +69,7 @@ export const useDeleteComment = (
       actions.setTriggerFetch(true);
     },
     onError: (e) => {
+      actions.setCommentCount((prev) => prev + 1);
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
       } else {

@@ -17,18 +17,12 @@ import {
 } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 import { Author } from '@/features/post/types/post';
-import { Ellipsis, Smile } from 'lucide-react';
+import { Ellipsis } from 'lucide-react';
 import Image from 'next/image';
 import { CommentList } from './comentList';
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from '@/components/ui/input-group';
-import { Button } from '@/components/ui/button';
-import clsx from 'clsx';
 import { useAddComment } from '../hooks/mutations';
 import { CommentInput } from './commentInput';
+import { PostMenuButtonInComment } from '@/app/partials/postMenuButtonInComments';
 
 type ViewCommentsProps = {
   children: React.ReactNode;
@@ -40,6 +34,14 @@ type ViewCommentsProps = {
   uploadedAt: string;
   caption: string;
   imageUrl: string;
+
+  likeCountClient: number;
+  likedByMeClient: boolean;
+  setLikeCountClient: React.Dispatch<SetStateAction<number>>;
+  setLikedByMeClient: React.Dispatch<SetStateAction<boolean>>;
+  setTriggerFetchLikes: React.Dispatch<SetStateAction<boolean>>;
+  triggerFetchLikes: boolean;
+  commentCountClient: number;
 };
 
 export const ViewComments = ({
@@ -52,6 +54,13 @@ export const ViewComments = ({
   uploadedAt,
   caption,
   imageUrl,
+  likeCountClient,
+  likedByMeClient,
+  setLikeCountClient,
+  setLikedByMeClient,
+  setTriggerFetchLikes,
+  triggerFetchLikes,
+  commentCountClient,
 }: ViewCommentsProps) => {
   const auth = useAppSelector((state) => state.auth);
   const [isOpen, setisOpen] = React.useState(false);
@@ -139,11 +148,23 @@ export const ViewComments = ({
 
           {/* Insert Comment Box: Only if user is logged in */}
           {auth.token !== '' && (
-            <CommentInput
-              textComment={textComment}
-              setTextComment={setTextComment}
-              handleSubmit={handleSubmit}
-            />
+            <div className='flex flex-col gap-4 bg-black xl:absolute xl:bottom-5'>
+              <PostMenuButtonInComment
+                id={id}
+                commentCountClient={commentCountClient}
+                triggerFetchLikes={triggerFetchLikes}
+                likeCountClient={likeCountClient}
+                likedByMeClient={likedByMeClient}
+                setLikeCountClient={setLikeCountClient}
+                setLikedByMeClient={setLikedByMeClient}
+                setTriggerFetchLikes={setTriggerFetchLikes}
+              />
+              <CommentInput
+                textComment={textComment}
+                setTextComment={setTextComment}
+                handleSubmit={handleSubmit}
+              />
+            </div>
           )}
         </div>
       </SheetContent>

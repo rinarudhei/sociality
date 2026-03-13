@@ -66,7 +66,7 @@ export const CommentList = ({
           </p>
         </div>
       ) : (
-        <ul className='flex h-full max-h-80 w-full flex-col gap-5 overflow-y-scroll xl:absolute xl:bottom-25'>
+        <ul className='flex h-full max-h-80 w-full flex-col gap-5 overflow-y-scroll [-ms-overflow-style:none] [scrollbar-width:none] xl:absolute xl:bottom-25 xl:max-w-110 [&::-webkit-scrollbar]:hidden'>
           {data.pages.map((group, i) => (
             <React.Fragment key={i}>
               {group.comments.map((comment, j, arr) => (

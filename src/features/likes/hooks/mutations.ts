@@ -35,10 +35,10 @@ export const useLikeAPost = (
       actions.setTriggerFetch(true);
     },
     onError: (e) => {
+      actions.setLikedByMe(false);
+      actions.setLikeCount((prev) => prev - 1);
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
-        actions.setLikedByMe(false);
-        actions.setLikeCount((prev) => prev - 1);
         router.push('/auth');
       } else {
         toast.error('Failed to like a post. Please try again later');
@@ -73,10 +73,10 @@ export const useUnlikeAPost = (
       actions.setLikedByMe(false);
     },
     onError: (e) => {
+      actions.setLikedByMe(true);
+      actions.setLikeCount((prev) => prev + 1);
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
-        actions.setLikedByMe(true);
-        actions.setLikeCount((prev) => prev + 1);
         router.push('/auth');
       } else {
         toast.error('Failed to unlike a post. Please try again later');
