@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import {
   GetLikesbyPostIdParams,
   GetLikesByPostIdResponse,
@@ -14,6 +14,7 @@ export const useGetLikesByPostId = (
   return useInfiniteQuery<GetLikesByPostIdResponse, AxiosError>({
     initialPageParam: 1,
     enabled: isEnabled,
+    placeholderData: keepPreviousData,
     queryKey: ['likes', params.id, params.page, params.limit],
     queryFn: ({ pageParam }) =>
       getLikesByPostId({ ...params, page: pageParam as number }, token),

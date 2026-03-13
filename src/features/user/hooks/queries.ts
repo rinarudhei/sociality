@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { SearchUserParams } from '../types/user';
-import { searchUsers } from '../services/user';
+import { searchUsers } from '../services/queries';
 
 export const useSearchUser = (
   params: SearchUserParams,
