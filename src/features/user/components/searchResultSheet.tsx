@@ -33,7 +33,7 @@ export const SearchResultSheet = ({
       {isError ? (
         <ErrorMessage errorMessage='Search users failed' />
       ) : (
-        <div className='flex flex-col items-center gap-4'>
+        <div className='flex flex-col items-center gap-4 px-4'>
           {isPending ? (
             <div></div>
           ) : isFetching ? (

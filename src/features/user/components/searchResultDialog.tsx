@@ -49,7 +49,7 @@ export const SearchResultDialog = ({
       {/* Test Search Input component*/}
       {children}
       <DialogContent
-        className='flex-center absolute top-18.5 w-full max-w-122.75 gap-4 rounded-3xl border-neutral-900 bg-black p-5'
+        className='flex-center fixed top-18.5 w-full max-w-122.75 gap-4 rounded-3xl border-neutral-900 bg-black p-5'
         showCloseButton={false}
         transparentOverlay={true}
       >
