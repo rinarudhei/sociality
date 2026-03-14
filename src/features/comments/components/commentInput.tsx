@@ -4,6 +4,12 @@ import {
   InputGroupInput,
   InputGroupAddon,
 } from '@/components/ui/input-group';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { emoticons } from '@/constants/type-emoticons';
 import clsx from 'clsx';
 import { Smile } from 'lucide-react';
 import { SetStateAction } from 'react';
@@ -20,10 +26,30 @@ export const CommentInput = ({
 }: CommentInputProps) => {
   return (
     <div className='flex gap-2'>
-      <div className='flex-center h-12 w-12 gap-2 rounded-xl border border-neutral-900 p-3'>
-        <Smile size={24} className='h-full w-full' />
-      </div>
-
+      <Popover>
+        <PopoverTrigger>
+          <div className='flex-center h-12 w-12 gap-2 rounded-xl border border-neutral-900 p-3'>
+            <Smile size={24} className='h-full w-full cursor-pointer' />
+          </div>
+        </PopoverTrigger>
+        <PopoverContent
+          align='start'
+          sideOffset={10}
+          className='left-0 mx-0 mb-2.5 rounded-xl border border-neutral-900 bg-neutral-950 p-0'
+        >
+          <div className='grid grid-cols-6 grid-rows-3 gap-2.5 p-4'>
+            {emoticons.map((emote, i) => (
+              <div
+                key={i}
+                className='h-full w-full text-center text-2xl leading-10'
+                onClick={() => setTextComment((prev) => prev + emote)}
+              >
+                {emote}
+              </div>
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
       <InputGroup className='h-12 gap-2 rounded-xl border border-neutral-900 px-4 py-2 xl:w-96'>
         <InputGroupInput
           id='add-comment'

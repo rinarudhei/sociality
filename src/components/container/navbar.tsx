@@ -1,5 +1,5 @@
 'use client';
-import { Menu, Search, X } from 'lucide-react';
+import { LogOut, Menu, Search, X } from 'lucide-react';
 import React from 'react';
 import clsx from 'clsx';
 import {
@@ -171,9 +171,12 @@ export const Navbar = () => {
                       <DropdownMenuItem asChild>
                         <Link
                           href='/auth'
-                          className='text-md cursor-pointer font-semibold tracking-[0.02rem] text-neutral-950'
+                          className='text-md text-red cursor-pointer font-semibold tracking-[0.02rem]'
                           onClick={handleLogout}
                         >
+                          <span>
+                            <LogOut size={24} className='text-red' />
+                          </span>{' '}
                           Logout
                         </Link>
                       </DropdownMenuItem>
