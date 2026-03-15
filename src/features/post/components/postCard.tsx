@@ -1,7 +1,10 @@
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
 import { Author } from '../types/post';
-import { generateUploadTimeDiffString } from '@/lib/utils';
+import {
+  generateAvatarFallback,
+  generateUploadTimeDiffString,
+} from '@/lib/utils';
 import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
 import { PostMenuButtons } from '@/app/partials/postMenuButtons';
@@ -53,7 +56,11 @@ export const PostCard = ({
               alt='author profile avatar'
               className='w-full object-contain'
             />
+            <AvatarFallback>
+              {generateAvatarFallback(author.name)}
+            </AvatarFallback>
           </Avatar>
+
           <div className='flex flex-col'>
             <p className='tex-sm sm:text-md text-neutral-25 font-bold -tracking-[0.02rem]'>
               {author.username}

@@ -1,14 +1,20 @@
 'use client';
+import { useAppSelector } from '@/stores/store';
 import clsx from 'clsx';
 import { Plus } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export const SocialityMenu = () => {
   const pathname = usePathname();
+  const user = useAppSelector((state) => state.user);
   return (
     <div className='fixed bottom-4 flex h-16 w-86.25 items-center justify-around rounded-full border border-neutral-900 bg-neutral-950 shadow-sm sm:bottom-8 sm:h-20 sm:w-90'>
       {/* Go Home Menu */}
-      <div className='flex w-23.5 flex-col items-center gap-0.5 sm:gap-1'>
+      <Link
+        href={'/'}
+        className='flex w-23.5 flex-col items-center gap-0.5 sm:gap-1'
+      >
         <div className='flex-center size-6 cursor-pointer'>
           <svg
             width='24'
@@ -32,7 +38,7 @@ export const SocialityMenu = () => {
         >
           Home
         </div>
-      </div>
+      </Link>
       {/* Add Post Menu */}
       <div className='bg-primary-300 flex-center size-11 cursor-pointer rounded-full border-none sm:size-12'>
         <Plus className='size-5.5 sm:size-6' />
@@ -40,7 +46,10 @@ export const SocialityMenu = () => {
 
       {/* Go Profile Menu */}
 
-      <div className='flex w-23.5 flex-col items-center gap-0.5 sm:gap-1'>
+      <Link
+        href={`/profile/${user.username}`}
+        className='flex w-23.5 flex-col items-center gap-0.5 sm:gap-1'
+      >
         <div className='flex-center size-6 cursor-pointer'>
           <svg
             width='24'
@@ -49,7 +58,9 @@ export const SocialityMenu = () => {
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
             className={clsx(
-              pathname === '/profile' ? 'fill-primary-200' : 'fill-neutral-25'
+              pathname.split('/').some((path) => path === 'profile')
+                ? 'fill-primary-200'
+                : 'fill-neutral-25'
             )}
           >
             <path d='M12 2C9.38 2 7.25 4.13 7.25 6.75C7.25 9.32 9.26 11.4 11.88 11.49C11.96 11.48 12.04 11.48 12.1 11.49C12.12 11.49 12.13 11.49 12.15 11.49C12.16 11.49 12.16 11.49 12.17 11.49C14.73 11.4 16.74 9.32 16.75 6.75C16.75 4.13 14.62 2 12 2Z' />
@@ -60,13 +71,15 @@ export const SocialityMenu = () => {
           className={clsx(
             'text-neutral-25 sm:text-md text-center text-xs font-normal tracking-normal sm:-tracking-[0.02rem]',
 
-            pathname === '/profile' ? 'text-primary-200' : 'text-neutral-25',
+            pathname.split('/').some((path) => path === 'profile')
+              ? 'text-primary-200'
+              : 'text-neutral-25',
             'cursor-pointer'
           )}
         >
           Profile
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 'use client';
-import { LogOut, Menu, Search, X } from 'lucide-react';
+import { ArrowLeft, LogOut, Menu, Search, X } from 'lucide-react';
 import React from 'react';
 import clsx from 'clsx';
 import {
@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { clearCurrentUser } from '../../features/auth/slices/userSlice';
 import { clearToken } from '../../features/auth/slices/authSlice';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Sociality } from './sociality';
 import { SearchResultDialog } from '@/features/user/components/searchResultDialog';
 import Image from 'next/image';
@@ -37,6 +37,7 @@ export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [showAuthbutton, setShowAuthButton] = React.useState(false);
   const [showSearchResult, setShowSearchResult] = React.useState(false);
+  const pathname = usePathname();
 
   React.useEffect(() => {
     if (user.id) {
@@ -90,7 +91,24 @@ export const Navbar = () => {
             'flex h-16 w-screen max-w-360 flex-row items-center justify-between gap-4 bg-black px-4 sm:h-20 sm:px-12 lg:px-30 xl:gap-0'
           )}
         >
-          <Sociality />
+          {pathname.split('/')[1] === 'profile' && (
+            <div className='flex items-center gap-2 sm:hidden'>
+              <ArrowLeft
+                size={24}
+                className='text-neutral-25 cursor-pointer'
+                onClick={() => router.push('/')}
+              />
+              <p className='text-md text-neutral-25 font-bold -tracking-[0.02rem]'>
+                {user.name}
+              </p>
+            </div>
+          )}
+          <Sociality
+            isProfile={
+              pathname.split('/').length >= 2 &&
+              pathname.split('/')[1] === 'profile'
+            }
+          />
 
           {/* Search input field */}
 
@@ -168,6 +186,14 @@ export const Navbar = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align='end'>
                     <DropdownMenuGroup>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href={`/profile/${user.username}`}
+                          className='text-md cursor-pointer font-semibold tracking-[0.02rem] text-neutral-950'
+                        >
+                          My Profile
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link
                           href='/auth'

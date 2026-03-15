@@ -1,9 +1,16 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export const Sociality = () => {
+export const Sociality = ({ isProfile }: { isProfile: boolean }) => {
   return (
-    <Link href='/' className='flex-center gap-2.75'>
+    <Link
+      href='/'
+      className={clsx(
+        'flex-center gap-2.75',
+        isProfile && 'sm:flex-center hidden'
+      )}
+    >
       <div className='relative h-7.5 w-7.5'>
         <Image
           src='/svg/sociality.svg'
