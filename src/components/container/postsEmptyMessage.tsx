@@ -1,4 +1,4 @@
-import { Button } from '../ui/button';
+import Link from 'next/link';
 
 export const PostsEmptyMessage = () => {
   return (
@@ -13,9 +13,9 @@ export const PostsEmptyMessage = () => {
         </p>
       </div>
 
-      <Button className='h-10 max-w-64.75 text-sm font-bold'>
+      <Link href='/post' className='h-10 max-w-64.75 text-sm font-bold'>
         Upload My First Post
-      </Button>
+      </Link>
     </div>
   );
 };

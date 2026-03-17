@@ -1,11 +1,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TabContentGallery } from '@/features/user/components/tabContentSaved';
+import { TabContentGallery } from '@/features/user/components/tabContentGallery';
 import { TabContentSaved } from '@/features/user/components/tabSaveGallery';
-import Image from 'next/image';
 
 export const Gallery = () => {
   return (
-    <Tabs defaultValue='gallery'>
+    <Tabs defaultValue='gallery' className='gap-6'>
       {/* Tab List */}
       <TabsList variant='line'>
         <TabsTrigger value='gallery'>
@@ -68,7 +67,7 @@ export const Gallery = () => {
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value='gallery' className='flex-center h-full min-h-93.75'>
+      <TabsContent value='gallery' className='flex-center'>
         <TabContentGallery />
       </TabsContent>
       <TabsContent value='saved' className='flex-center'>

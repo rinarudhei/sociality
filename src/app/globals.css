@@ -323,6 +323,12 @@ body {
   justify-content: start;
 }
 
+@utility hide-scroll {
+  -webkit-scrollbar: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @utility flex-between {
   display: flex;
   align-items: center;

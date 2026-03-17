@@ -78,7 +78,7 @@ export const ProfileInfo = () => {
       </p>
 
       {/* metrics */}
-      <div className='flex-between h-12.5'>
+      <div className='flex-around h-12.5'>
         {userMetrics.map((m, i, arr) => (
           <React.Fragment key={m.metric}>
             <MetricBox metric={m.metric} counts={userData.counts} />

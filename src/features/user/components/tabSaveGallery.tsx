@@ -34,8 +34,8 @@ export const TabContentSaved = () => {
   ) : isPending || isFetching ? (
     <Spinner />
   ) : (
-    <>
-      <div className='grid grid-cols-3 gap-1'>
+    <div className='hide-scroll h-full sm:h-203'>
+      <div className='hide-scroll grid w-90.25 grid-cols-3 gap-0.5 sm:w-full sm:gap-0.75 md:w-full lg:w-203 lg:gap-1'>
         {data.pages.map((group, i) => (
           <React.Fragment key={i}>
             {group.posts.map((post, i) => (
@@ -43,11 +43,13 @@ export const TabContentSaved = () => {
             ))}
           </React.Fragment>
         ))}
+
+        <div className='h-15 w-full sm:h-20 md:h-21' />
       </div>
 
       <div ref={trackingRef} className='flex-center flex-col'>
         {(isFetching || isFetchingNextPage) && <Spinner />}
       </div>
-    </>
+    </div>
   );
 };

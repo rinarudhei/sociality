@@ -6,7 +6,7 @@ import { getPosts } from '../services/post';
 export const useGetPosts = (params: GetPostsParams, token: string) => {
   return useInfiniteQuery<GetPostsResponse, AxiosError>({
     initialPageParam: 1,
-    queryKey: ['posts', params],
+    queryKey: ['posts', params.limit],
     queryFn: ({ pageParam }) =>
       getPosts({ ...params, page: pageParam as number }, token),
     getNextPageParam: (responseData) => {

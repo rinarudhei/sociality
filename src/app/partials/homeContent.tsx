@@ -3,7 +3,7 @@ import ErrorMessage from '@/components/container/errorMessage';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { PostCard } from '@/features/post/components/postCard';
-import { useGetPosts } from '@/features/post/hooks/post';
+import { useGetPosts } from '@/features/post/hooks/queries';
 import { useAppSelector } from '@/stores/store';
 import React from 'react';
 import { useOnInView } from 'react-intersection-observer';

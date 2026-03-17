@@ -24,3 +24,10 @@ export type Author = {
   name: string;
   avatarUrl: string;
 };
+
+export type UploadPostParams = {
+  formData: FormData;
+  token: string;
+};
+
+export type UploadPostResponse = Post;

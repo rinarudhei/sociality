@@ -103,15 +103,28 @@ export const Navbar = () => {
               </p>
             </div>
           )}
+          {pathname === '/post' && (
+            <div className='flex gap-3 sm:hidden'>
+              <Link href={'/'}>
+                <ArrowLeft
+                  size={32}
+                  className='text-neutral-25 cursor-pointer'
+                />
+              </Link>
+              <p className='text-neutral-25 text-display-xs font-bold'>
+                Add Post
+              </p>
+            </div>
+          )}
           <Sociality
             isProfile={
               pathname.split('/').length >= 2 &&
               pathname.split('/')[1] === 'profile'
             }
+            isAddPost={pathname === '/post'}
           />
 
           {/* Search input field */}
-
           <SearchResultDialog
             query={searchText}
             showSearchResult={showSearchResult}
@@ -162,11 +175,13 @@ export const Navbar = () => {
           {/* Menus */}
           {(isLoggedIn || !isLargeIsh) && (
             <div className={clsx('flex-center gap-4 lg:gap-6')}>
-              <Search
-                size={24}
-                onClick={toggleShowSearchField}
-                className='inline-block sm:hidden'
-              />
+              {pathname !== '/post' && (
+                <Search
+                  size={24}
+                  onClick={toggleShowSearchField}
+                  className='inline-block sm:hidden'
+                />
+              )}
               {isLoggedIn && (
                 <DropdownMenu>
                   <DropdownMenuTrigger className='flex-center cursor-pointer gap-4'>

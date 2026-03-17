@@ -112,7 +112,7 @@ export const PostCard = ({
         </p>
         <div
           className={clsx(
-            'text-primary-200 sm:text-md line-clamp-2 cursor-pointer text-sm font-bold -tracking-[0.01rem] sm:-tracking-[0.02rem]',
+            'text-primary-200 sm:text-md cursor-pointer text-sm font-bold -tracking-[0.01rem] sm:-tracking-[0.02rem]',
             !isClamped && 'hidden'
           )}
           onClick={() => setShowMore((prev) => !prev)}
