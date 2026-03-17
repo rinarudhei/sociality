@@ -23,6 +23,7 @@ import { CommentList } from './comentList';
 import { useAddComment } from '../hooks/mutations';
 import { CommentInput } from './commentInput';
 import { PostMenuButtonInComment } from '@/app/partials/postMenuButtonInComments';
+import Link from 'next/link';
 
 type ViewCommentsProps = {
   children: React.ReactNode;
@@ -110,14 +111,17 @@ export const ViewComments = ({
                 </AvatarFallback>
               </Avatar>
 
-              <div className='flex w-full flex-col items-center gap-0'>
+              <Link
+                href={`/profile/${author.username}`}
+                className='flex w-full cursor-pointer flex-col items-center gap-0'
+              >
                 <h4 className='text-neutral-25 w-full text-xs font-semibold tracking-normal sm:text-sm sm:font-bold sm:-tracking-[0.01rem]'>
                   {author.name}
                 </h4>
                 <p className='h-4 w-full text-xs font-normal -tracking-[0.03rem] text-neutral-400 sm:tracking-normal'>
                   {generateUploadTimeDiffString(uploadedAt)}
                 </p>
-              </div>
+              </Link>
 
               <Ellipsis size={24} />
             </div>

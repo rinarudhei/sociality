@@ -8,6 +8,7 @@ import {
 import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
 import { PostMenuButtons } from '@/app/partials/postMenuButtons';
+import Link from 'next/link';
 
 type PostCardProps = {
   id: number;
@@ -49,7 +50,10 @@ export const PostCard = ({
       {/* post container */}
       <div className='flex w-full flex-col items-center gap-2 sm:gap-6'>
         {/* author info */}
-        <div className='flex w-full gap-3'>
+        <Link
+          href={`/profile/${author.username}`}
+          className='flex w-full cursor-pointer gap-3'
+        >
           <Avatar className='h-11 w-11 sm:h-12 sm:w-12'>
             <AvatarImage
               src={author.avatarUrl}
@@ -69,7 +73,7 @@ export const PostCard = ({
               {generateUploadTimeDiffString(createdAt)}
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* post image */}
         <div className='relative h-90.25 w-screen max-w-90.25 sm:h-150 sm:w-150 sm:max-w-full'>
@@ -98,9 +102,12 @@ export const PostCard = ({
 
       {/* post caption */}
       <div className='flex flex-col sm:gap-1'>
-        <h4 className='sm:text-md text-neutral-25 text-sm font-bold -tracking-[0.01rem] sm:-tracking-[0.02rem]'>
+        <Link
+          href={`/profile/${author.username}`}
+          className='sm:text-md text-neutral-25 text-sm font-bold -tracking-[0.01rem] sm:-tracking-[0.02rem]'
+        >
           {author.username}
-        </h4>
+        </Link>
         <p
           ref={captionRef}
           className={clsx(

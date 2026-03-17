@@ -10,6 +10,7 @@ import { useGetCommentsByPostId } from '../hooks/queries';
 import { Separator } from '@/components/ui/separator';
 import ErrorMessage from '@/components/container/errorMessage';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 
 type CommentListProps = {
   id: number;
@@ -72,7 +73,10 @@ export const CommentList = ({
               {group.comments.map((comment, j, arr) => (
                 <li key={comment.id} className='flex w-full flex-col gap-3'>
                   <div className='flex w-full flex-col gap-2 sm:gap-2.5'>
-                    <div className='flex-center w-full gap-2'>
+                    <Link
+                      href={`/profile/${comment.author.username}`}
+                      className='flex-center w-full cursor-pointer gap-2'
+                    >
                       <Avatar className='size-10'>
                         <AvatarImage
                           src={comment.author.avatarUrl}
@@ -93,7 +97,7 @@ export const CommentList = ({
                           {generateUploadTimeDiffString(comment.createdAt)}
                         </p>
                       </div>
-                    </div>
+                    </Link>
 
                     <p className='text-neutral-25 text-xs font-normal -tracking-[0.03rem] sm:text-sm sm:-tracking-[0.02rem]'>
                       {comment.text}
