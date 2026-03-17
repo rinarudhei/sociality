@@ -1,14 +1,15 @@
 import { PostBox } from '@/app/profile/[username]/partials/postBox';
 import ErrorMessage from '@/components/container/errorMessage';
 import { Spinner } from '@/components/ui/spinner';
-import { useParams } from 'next/navigation';
 import React from 'react';
 import { useOnInView } from 'react-intersection-observer';
-import { useGetSavedPosts } from '../hooks/queries';
+import { useGetLikedPosts } from '../hooks/queries';
 import { useAppSelector } from '@/stores/store';
+import { useParams } from 'next/navigation';
 
-export const TabContentSaved = () => {
+export const TabLikedGallery = () => {
   const auth = useAppSelector((state) => state.auth);
+  const params = useParams<{ username: string }>();
   const {
     data,
     isError,
@@ -18,7 +19,7 @@ export const TabContentSaved = () => {
     refetch,
     hasNextPage,
     fetchNextPage,
-  } = useGetSavedPosts({ token: auth.token, page: 1, limit: 10 });
+  } = useGetLikedPosts({ page: 1, limit: 10, username: params.username });
 
   const trackingRef = useOnInView(
     (inView) => {

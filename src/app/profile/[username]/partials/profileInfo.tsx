@@ -11,16 +11,49 @@ import { generateAvatarFallback } from '@/lib/utils';
 import { useAppSelector } from '@/stores/store';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
+import clsx from 'clsx';
+import { CiCircleCheck } from 'react-icons/ci';
+import {
+  useFollowUser,
+  useUnfollowUser,
+} from '@/features/user/hooks/mutations';
 
 export const ProfileInfo = () => {
   const { username } = useParams<{ username: string }>();
   const auth = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.user);
   const {
     data: userData,
     isPending: isUserDataPending,
     isError: isUserDataError,
+    refetch,
   } = useGetUserByUsername({ username, token: auth.token });
+  const [triggerFetch, setTriggerRefetch] = React.useState(false);
+
+  const { mutate } = useFollowUser({
+    id: userData ? userData.id : null,
+    setTriggerRefetch,
+  });
+  const { mutate: mutateUnfollow } = useUnfollowUser({
+    id: userData ? userData.id : null,
+    setTriggerRefetch,
+  });
+
+  const handleFollowUser = (username: string) => {
+    mutate({ token: auth.token, username });
+  };
+
+  const handleUnfollowUser = (username: string) => {
+    mutateUnfollow({ token: auth.token, username });
+  };
+
+  React.useEffect(() => {
+    if (triggerFetch) {
+      refetch();
+      setTriggerRefetch(false);
+    }
+  }, [triggerFetch, refetch]);
   return isUserDataError ? (
     <ErrorMessage errorMessage='Error loading user data' />
   ) : isUserDataPending ? (
@@ -54,12 +87,41 @@ export const ProfileInfo = () => {
 
         {/* Profile Buttons */}
         <div className='flex w-full items-center justify-around gap-3 sm:max-w-47.5'>
-          <Button
-            variant='outline'
-            className='text-neutral-25 mx-0 h-10 max-w-77.25 shrink px-0 text-sm font-bold -tracking-[0.01rem] sm:max-w-32.5'
-          >
-            Edit Profile
-          </Button>
+          {/* follow button  && edit profile button*/}
+          {userData.username !== user.username ? (
+            <Button
+              variant={userData.isFollowing ? 'outline' : 'default'}
+              className={clsx(
+                'h-10 gap-2 border-neutral-900',
+                userData.isFollowing
+                  ? 'max-w-31.75 px-4 py-2'
+                  : 'max-w-23.25 px-6 py-2'
+              )}
+              onClick={
+                userData.isFollowing
+                  ? () => handleUnfollowUser(username)
+                  : () => handleFollowUser(username)
+              }
+            >
+              {userData.isFollowing ? (
+                <div className='text-neutral-25 flex-between w-full text-sm font-bold -tracking-[0.01rem] text-nowrap'>
+                  <CiCircleCheck size={20} className='text-neutral-25 size-5' />
+                  <p>Following</p>
+                </div>
+              ) : (
+                <p className='text-neutral-25 text-sm font-bold -tracking-[0.01rem]'>
+                  Follow
+                </p>
+              )}
+            </Button>
+          ) : (
+            <Button
+              variant='outline'
+              className='text-neutral-25 mx-0 h-10 max-w-77.25 shrink px-0 text-sm font-bold -tracking-[0.01rem] sm:max-w-32.5'
+            >
+              Edit Profile
+            </Button>
+          )}
           <div className='flex-center h-10 w-10 gap-1.75 rounded-full border border-neutral-900 p-1.75'>
             <Image
               src='/svg/Share Icon.svg'

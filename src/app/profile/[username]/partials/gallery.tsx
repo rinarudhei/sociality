@@ -1,8 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TabContentGallery } from '@/features/user/components/tabContentGallery';
+import { TabLikedGallery } from '@/features/user/components/tabLikesGallery';
 import { TabContentSaved } from '@/features/user/components/tabSaveGallery';
+import { useAppSelector } from '@/stores/store';
+import { useParams } from 'next/navigation';
 
 export const Gallery = () => {
+  const params = useParams<{ username: string }>();
+  const user = useAppSelector((state) => state.user);
   return (
     <Tabs defaultValue='gallery' className='gap-6'>
       {/* Tab List */}
@@ -38,41 +43,71 @@ export const Gallery = () => {
             <p className='-tracking-[0.01rem]'>Gallery</p>
           </div>
         </TabsTrigger>
-        <TabsTrigger value='saved'>
-          <div className='flex-center h-12 gap-2 px-6'>
-            <div className='size-5'>
-              <svg
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  d='M16.8198 2H7.17982C5.04982 2 3.31982 3.74 3.31982 5.86V19.95C3.31982 21.75 4.60982 22.51 6.18982 21.64L11.0698 18.93C11.5898 18.64 12.4298 18.64 12.9398 18.93L17.8198 21.64C19.3998 22.52 20.6898 21.76 20.6898 19.95V5.86C20.6798 3.74 18.9498 2 16.8198 2Z'
-                  strokeWidth='1.5'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                />
-                <path
-                  d='M16.8198 2H7.17982C5.04982 2 3.31982 3.74 3.31982 5.86V19.95C3.31982 21.75 4.60982 22.51 6.18982 21.64L11.0698 18.93C11.5898 18.64 12.4298 18.64 12.9398 18.93L17.8198 21.64C19.3998 22.52 20.6898 21.76 20.6898 19.95V5.86C20.6798 3.74 18.9498 2 16.8198 2Z'
-                  strokeWidth='1.5'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                />
-              </svg>
+        {params.username === user.username ? (
+          <TabsTrigger value='saved'>
+            <div className='flex-center h-12 gap-2 px-6'>
+              <div className='size-5'>
+                <svg
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    d='M16.8198 2H7.17982C5.04982 2 3.31982 3.74 3.31982 5.86V19.95C3.31982 21.75 4.60982 22.51 6.18982 21.64L11.0698 18.93C11.5898 18.64 12.4298 18.64 12.9398 18.93L17.8198 21.64C19.3998 22.52 20.6898 21.76 20.6898 19.95V5.86C20.6798 3.74 18.9498 2 16.8198 2Z'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                  <path
+                    d='M16.8198 2H7.17982C5.04982 2 3.31982 3.74 3.31982 5.86V19.95C3.31982 21.75 4.60982 22.51 6.18982 21.64L11.0698 18.93C11.5898 18.64 12.4298 18.64 12.9398 18.93L17.8198 21.64C19.3998 22.52 20.6898 21.76 20.6898 19.95V5.86C20.6798 3.74 18.9498 2 16.8198 2Z'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                </svg>
+              </div>
+              <p className='-tracking-[0.01rem]'>Saved</p>
             </div>
-            <p className='-tracking-[0.01rem]'>Saved</p>
-          </div>
-        </TabsTrigger>
+          </TabsTrigger>
+        ) : (
+          <TabsTrigger value='liked'>
+            <div className='flex-center h-12 gap-2 px-6'>
+              <div className='size-5'>
+                <svg
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    d='M12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.6901C2 5.6001 4.49 3.1001 7.56 3.1001C9.38 3.1001 10.99 3.9801 12 5.3401C13.01 3.9801 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.6001 22 8.6901C22 15.6901 15.52 19.8201 12.62 20.8101Z'
+                    strokeWidth='1.5'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  />
+                </svg>
+              </div>
+              <p className='-tracking-[0.01rem]'>Liked</p>
+            </div>
+          </TabsTrigger>
+        )}
       </TabsList>
 
       <TabsContent value='gallery' className='flex-center'>
         <TabContentGallery />
       </TabsContent>
-      <TabsContent value='saved' className='flex-center'>
-        <TabContentSaved />
-      </TabsContent>
+      {params.username === user.username ? (
+        <TabsContent value='saved' className='flex-center'>
+          <TabContentSaved />
+        </TabsContent>
+      ) : (
+        <TabsContent value='liked' className='flex-center'>
+          <TabLikedGallery />
+        </TabsContent>
+      )}
     </Tabs>
   );
 };

@@ -12,6 +12,7 @@ import {
   SearchUserParams,
 } from '../types/user';
 import {
+  getLikedPosts,
   getSavedPost,
   getuserByUsername,
   getUserPostsByUsername,
@@ -34,7 +35,7 @@ export const useSearchUser = (
 
 export const useGetUserByUsername = (params: GetUserByUsernameParams) => {
   return useQuery({
-    queryKey: ['user', params.username, params.token.length > 0],
+    queryKey: ['user', params.username],
     queryFn: () => getuserByUsername(params),
     staleTime: 10 * 60 * 1000,
     placeholderData: keepPreviousData,
@@ -63,6 +64,22 @@ export const useGetSavedPosts = (params: GetSavedPostsParams) => {
     queryKey: ['user-posts', params.limit],
     queryFn: ({ pageParam }) =>
       getSavedPost({ ...params, page: pageParam as number }),
+    getNextPageParam: (responseData) => {
+      if (responseData.pagination.page < responseData.pagination.totalPages) {
+        return responseData.pagination.page + 1;
+      } else {
+        return undefined;
+      }
+    },
+  });
+};
+
+export const useGetLikedPosts = (params: GetPostsByUsernameParams) => {
+  return useInfiniteQuery<GetPostsByUsernameResponse, AxiosError>({
+    initialPageParam: 1,
+    queryKey: ['user-posts', params.limit],
+    queryFn: ({ pageParam }) =>
+      getLikedPosts({ ...params, page: pageParam as number }),
     getNextPageParam: (responseData) => {
       if (responseData.pagination.page < responseData.pagination.totalPages) {
         return responseData.pagination.page + 1;

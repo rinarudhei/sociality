@@ -54,3 +54,16 @@ export async function getSavedPost({
 
   return response.data.data;
 }
+
+export async function getLikedPosts({
+  page,
+  limit,
+  username,
+}: GetPostsByUsernameParams): Promise<GetPostsByUsernameResponse> {
+  const response = await api.get<ApiResponse<GetPostsByUsernameResponse>>(
+    `/api/users/${username}/likes`,
+    { params: { page, limit } }
+  );
+
+  return response.data.data;
+}

@@ -34,6 +34,7 @@ export type GetUserByUsernameResponse = {
     likes: number;
   };
   isFollowedByMe: boolean;
+  isFollowing: boolean;
   isMe: boolean;
 };
 

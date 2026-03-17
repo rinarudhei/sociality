@@ -8,57 +8,68 @@ import {
 import { AxiosError, HttpStatusCode } from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { id } from 'zod/v4/locales';
 
-export const useFollowUser = ({
-  id,
-  setTriggerRefetch,
-}: UseFollowUserProps) => {
+export const useFollowUser = (props: UseFollowUserProps) => {
   const router = useRouter();
   const queryClient = new QueryClient();
   return useMutation<FollowUserResponse, AxiosError, FollowUserParams, void>({
     mutationFn: followUser,
-    onMutate: (params) => {
-      toast.success(`You are following ${params.username}`);
-    },
-    onSuccess: () => {
-      setTriggerRefetch(true);
+    onMutate: (params) => {},
+    onSuccess: (_, variables) => {
+      if (props.id) {
+        props.setTriggerRefetch(true);
+      }
+
+      toast.success(`You are following ${variables.username}`);
     },
     onError: (e) => {
-      setTriggerRefetch(false);
+      if (props.id) {
+        props.setTriggerRefetch(false);
+      }
+
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
-        router.push('/');
+        router.push('/auth');
       }
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['likes', id, 6] });
+    onSettled: (data, err, variables) => {
+      if (props.id) {
+        queryClient.invalidateQueries({ queryKey: ['likes', props.id, 6] });
+        queryClient.invalidateQueries({
+          queryKey: ['user', variables.username],
+        });
+      }
     },
   });
 };
 
-export const useUnfollowUser = ({
-  id,
-  setTriggerRefetch,
-}: UseFollowUserProps) => {
+export const useUnfollowUser = (props: UseFollowUserProps) => {
   const router = useRouter();
   const queryClient = new QueryClient();
   return useMutation<FollowUserResponse, AxiosError, FollowUserParams, void>({
     mutationFn: unfollowUser,
-    onMutate: (params) => {
-      toast.success(`You just unfollowed ${params.username}`);
-    },
-    onSuccess: () => {
-      setTriggerRefetch(true);
+    onMutate: (params) => {},
+    onSuccess: (_, variables) => {
+      if (props.id) {
+        props.setTriggerRefetch(true);
+      }
+
+      toast.success(`You just unfollowed ${variables.username}`);
     },
     onError: (e) => {
-      setTriggerRefetch(false);
+      if (props.id) {
+        props.setTriggerRefetch(false);
+      }
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
-        router.push('/');
+        router.push('/auth');
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['likes', id, 6] });
+      if (props.id) {
+        queryClient.invalidateQueries({ queryKey: ['likes', id, 6] });
+      }
     },
   });
 };
