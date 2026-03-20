@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Spinner } from '@/components/ui/spinner';
 import { generateAvatarFallback } from '@/lib/utils';
 import useMedia from 'use-media';
+import Link from 'next/link';
 
 type SearchResultSheet = {
   query: string;
@@ -53,8 +54,9 @@ export const SearchResultSheet = ({
           ) : (
             <>
               {data.users.map((user) => (
-                <div
-                  className='flex w-full gap-2'
+                <Link
+                  href={`/profile/${user.username}`}
+                  className='flex w-full cursor-pointer gap-2'
                   key={user.id}
                   onClick={() => setShowSearchResult(false)}
                 >
@@ -77,7 +79,7 @@ export const SearchResultSheet = ({
                       {user.username}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </>
           )}

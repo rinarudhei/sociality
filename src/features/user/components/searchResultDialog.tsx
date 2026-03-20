@@ -12,6 +12,7 @@ import { VisuallyHidden } from 'radix-ui';
 import { Spinner } from '@/components/ui/spinner';
 import { generateAvatarFallback } from '@/lib/utils';
 import useMedia from 'use-media';
+import Link from 'next/link';
 
 type SearchResultDialog = {
   query: string;
@@ -76,8 +77,9 @@ export const SearchResultDialog = ({
         ) : (
           <>
             {data.users.map((user) => (
-              <div
-                className='flex gap-2'
+              <Link
+                href={`/profile/${user.username}`}
+                className='flex cursor-pointer gap-2'
                 key={user.id}
                 onClick={() => setShowSearchResult(false)}
               >
@@ -100,7 +102,7 @@ export const SearchResultDialog = ({
                     {user.username}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </>
         )}
