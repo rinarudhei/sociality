@@ -58,7 +58,7 @@ export const CommentList = ({
   ) : (
     <>
       {data.pages.length === 0 || data.pages[0].comments.length === 0 ? (
-        <div className='flex-center mx-auto h-38.75 w-full max-w-90.25 flex-col gap-1 xl:absolute xl:bottom-28.25 xl:left-1/2 xl:-translate-x-[50%]'>
+        <div className='flex-center mx-auto h-38.75 w-full max-w-90.25 flex-col gap-1 xl:absolute xl:bottom-58.25 xl:left-1/2 xl:-translate-x-[50%]'>
           <p className='text-neutral-25 text-md text-center font-bold -tracking-[0.02rem]'>
             No Comments yet
           </p>

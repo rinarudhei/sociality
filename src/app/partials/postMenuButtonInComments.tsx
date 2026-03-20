@@ -1,5 +1,6 @@
 import { ViewLikes } from '@/features/likes/components/viewLikes';
 import { useLikeAPost, useUnlikeAPost } from '@/features/likes/hooks/mutations';
+import { SaveButton } from '@/features/saves/components/saveButton';
 import { useAppSelector } from '@/stores/store';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -53,6 +54,7 @@ export const PostMenuButtonInComment = ({
   const handleClickUnlike = () => {
     mutateUnlike({ id, token: auth.token });
   };
+
   return (
     <div className='flex items-center justify-between'>
       {/* actions */}
@@ -111,14 +113,7 @@ export const PostMenuButtonInComment = ({
         </div>
       </div>
       {/* save */}
-      <div className='h-6 w-6 cursor-pointer'>
-        <Image
-          src='/svg/Save icon.svg'
-          alt='save button icon svg'
-          width={24}
-          height={24}
-        />
-      </div>
+      <SaveButton id={id} />
     </div>
   );
 };

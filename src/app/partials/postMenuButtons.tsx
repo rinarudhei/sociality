@@ -2,6 +2,7 @@ import { ViewComments } from '@/features/comments/components/viewComments';
 import { ViewLikes } from '@/features/likes/components/viewLikes';
 import { useLikeAPost, useUnlikeAPost } from '@/features/likes/hooks/mutations';
 import { Author } from '@/features/post/types/post';
+import { SaveButton } from '@/features/saves/components/saveButton';
 import { useAppSelector } from '@/stores/store';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -138,14 +139,7 @@ export const PostMenuButtons = ({
         </div>
       </div>
       {/* save */}
-      <div className='h-6 w-6 cursor-pointer'>
-        <Image
-          src='/svg/Save icon.svg'
-          alt='save button icon svg'
-          width={24}
-          height={24}
-        />
-      </div>
+      <SaveButton id={id} />
     </div>
   );
 };

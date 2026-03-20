@@ -18,6 +18,7 @@ export const TabContentSaved = () => {
     refetch,
     hasNextPage,
     fetchNextPage,
+    isRefetching,
   } = useGetSavedPosts({ token: auth.token, page: 1, limit: 10 });
 
   const trackingRef = useOnInView(
@@ -29,9 +30,13 @@ export const TabContentSaved = () => {
     { root: null, rootMargin: '200px', threshold: 1.0, triggerOnce: false }
   );
 
+  React.useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   return isError ? (
     <ErrorMessage errorMessage='Failed loading posts' />
-  ) : (isPending || isFetching) && !isFetchingNextPage ? (
+  ) : (isPending || isFetching) && !isFetchingNextPage && !isRefetching ? (
     <Spinner />
   ) : (
     <div className='hide-scroll h-full sm:h-203'>
