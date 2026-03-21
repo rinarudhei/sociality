@@ -11,6 +11,7 @@ export type LoginResponse = {
 export type RegisterResponse = {
   id: number;
   name: string;
+  username: string;
   email: string;
   phone: string;
   profilePhoto: string;

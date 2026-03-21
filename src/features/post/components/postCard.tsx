@@ -20,6 +20,7 @@ type PostCardProps = {
   commentCount: number;
   likedByMe: boolean;
 };
+
 export const PostCard = ({
   id,
   imageUrl,

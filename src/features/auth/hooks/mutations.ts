@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '../../../stores/store';
 import { setToken } from '@/features/auth/slices/authSlice';
 import { setCurrentUser } from '@/features/auth/slices/userSlice';
+import { User } from 'lucide-react';
 
 export const useRegister = (toggleIsLoginPage: () => void) => {
   return useMutation({
@@ -32,7 +33,16 @@ export const useLogin = () => {
     mutationFn: (body: LoginApiParams) => login(body),
     onSuccess: (data: LoginResponse) => {
       dispatch(setToken(data.token));
-      dispatch(setCurrentUser(data.user));
+      dispatch(
+        setCurrentUser({
+          id: data.user.id,
+          email: data.user.email,
+          name: data.user.name,
+          username: data.user.username,
+          phone: data.user.phone,
+          profilePhoto: data.user.profilePhoto,
+        })
+      );
       router.push('/');
     },
     onError: (e) => {

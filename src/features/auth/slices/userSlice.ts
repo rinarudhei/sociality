@@ -7,7 +7,6 @@ const initialState = {
   email: '',
   phone: '',
   profilePhoto: '',
-  role: 'USER',
 };
 
 const userSlice = createSlice({
@@ -21,7 +20,6 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.phone = action.payload.phone;
       state.profilePhoto = action.payload.profilePhoto;
-      state.role = action.payload.role;
     },
     clearCurrentUser: (state) => {
       state.id = 0;
@@ -30,7 +28,6 @@ const userSlice = createSlice({
       state.email = '';
       state.phone = '';
       state.profilePhoto = '';
-      state.role = '';
     },
   },
 });
