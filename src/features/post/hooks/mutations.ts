@@ -21,29 +21,6 @@ export const useUploadPost = (username: string) => {
     },
     onSuccess(data, variables, onMutateResult, context) {
       ShowSuccessToast('Success Post');
-      // toast('Success Post', {
-      //   position: 'top-right',
-      //   style: {
-      //     background: '#079455',
-      //     color: 'white',
-      //     border: 'none',
-      //     fontSize: '14px',
-      //     lineHeight: '28px',
-      //     letterSpacing: '-0.02rem',
-      //     fontWeight: 600,
-      //   },
-      //   action: {
-      //     label: 'X',
-      //     actionButtonStyle: {
-      //       fill: '#079455',
-      //       stroke: '#079455',
-      //       background: 'transparent',
-      //       border: 'none',
-      //       color: 'white',
-      //     },
-      //     onClick: () => close(),
-      //   },
-      // });
     },
   });
 };

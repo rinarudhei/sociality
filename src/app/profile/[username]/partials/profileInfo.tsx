@@ -10,7 +10,7 @@ import { useGetUserByUsername } from '@/features/user/hooks/queries';
 import { generateAvatarFallback } from '@/lib/utils';
 import { useAppSelector } from '@/stores/store';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { CiCircleCheck } from 'react-icons/ci';
@@ -18,9 +18,12 @@ import {
   useFollowUser,
   useUnfollowUser,
 } from '@/features/user/hooks/mutations';
+import Link from 'next/link';
 
 export const ProfileInfo = () => {
   const { username } = useParams<{ username: string }>();
+  const searchParams = useSearchParams();
+  const useRefetch = searchParams.get('useRefetch');
   const auth = useAppSelector((state) => state.auth);
   const user = useAppSelector((state) => state.user);
   const {
@@ -54,6 +57,11 @@ export const ProfileInfo = () => {
       setTriggerRefetch(false);
     }
   }, [triggerFetch, refetch]);
+  React.useEffect(() => {
+    if (useRefetch) {
+      refetch();
+    }
+  }, [useRefetch]);
   return isUserDataError ? (
     <ErrorMessage errorMessage='Error loading user data' />
   ) : isUserDataPending ? (
@@ -67,7 +75,7 @@ export const ProfileInfo = () => {
             <AvatarImage
               src={userData.avatarUrl}
               alt='User Profile Picture'
-              className='object-contain'
+              className=''
             />
 
             <AvatarFallback className='text-2xl'>
@@ -116,10 +124,11 @@ export const ProfileInfo = () => {
             </Button>
           ) : (
             <Button
+              asChild
               variant='outline'
-              className='text-neutral-25 mx-0 h-10 max-w-77.25 shrink px-0 text-sm font-bold -tracking-[0.01rem] sm:max-w-32.5'
+              className='text-neutral-25 mx-0 h-10 max-w-77.25 shrink cursor-pointer px-0 text-sm font-bold -tracking-[0.01rem] sm:max-w-32.5'
             >
-              Edit Profile
+              <Link href={`/profile/edit/${user.username}`}>Edit Profile</Link>
             </Button>
           )}
           <div className='flex-center h-10 w-10 gap-1.75 rounded-full border border-neutral-900 p-1.75'>

@@ -99,7 +99,7 @@ export const Navbar = () => {
                 onClick={() => router.push('/')}
               />
               <p className='text-md text-neutral-25 font-bold -tracking-[0.02rem]'>
-                {user.name}
+                {pathname.split('/')[2] === 'edit' ? 'Edit Profile' : user.name}
               </p>
             </div>
           )}
@@ -175,7 +175,7 @@ export const Navbar = () => {
           {/* Menus */}
           {(isLoggedIn || !isLargeIsh) && (
             <div className={clsx('flex-center gap-4 lg:gap-6')}>
-              {pathname !== '/post' && (
+              {pathname !== '/post' && pathname.split('/')[2] !== 'edit' && (
                 <Search
                   size={24}
                   onClick={toggleShowSearchField}
@@ -189,7 +189,7 @@ export const Navbar = () => {
                       <AvatarImage
                         src={user.profilePhoto}
                         alt='User Profile Picture'
-                        className='object-contain'
+                        className=''
                       />
                       <AvatarFallback>
                         {generateAvatarFallback(user.name)}

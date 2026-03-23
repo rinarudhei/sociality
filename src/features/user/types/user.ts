@@ -19,6 +19,15 @@ export type User = {
   isFollowedByMe: boolean;
 };
 
+export type UserProfileDetail = {
+  username: string;
+  bio: string;
+  name: string;
+  avatarUrl: string | undefined;
+  email: string;
+  phone: string;
+};
+
 export type GetUserByUsernameResponse = {
   id: number;
   username: string;
@@ -61,3 +70,14 @@ export type GetSavedPostsParams = {
 };
 
 export type GetSavedPostsResponse = GetPostsByUsernameResponse;
+
+export type PatchProfileResponse = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+  bio: string;
+  avatarUrl: string;
+  updatedAt: string;
+};
