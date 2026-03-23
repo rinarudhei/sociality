@@ -18,6 +18,7 @@ export const PostBox = (props: PostBoxProps) => {
         width={268}
         height={268}
         className='h-full w-full rounded-[3px] object-fill sm:rounded-sm'
+        loading='eager'
       />
     </div>
   );
