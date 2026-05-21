@@ -1,4 +1,8 @@
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { savePost, unsavePost } from '../services/save';
 import { AxiosError, HttpStatusCode } from 'axios';
 import { SavePostService } from '../types/type';
@@ -8,15 +12,9 @@ import React, { SetStateAction } from 'react';
 
 type UseSavePostProps = {
   setPostSaved: React.Dispatch<SetStateAction<boolean>>;
-  setTriggerRefetch?: React.Dispatch<SetStateAction<boolean>>;
-  useRefetch?: boolean;
 };
-export const useSavePost = ({
-  setPostSaved,
-  setTriggerRefetch,
-  useRefetch = false,
-}: UseSavePostProps) => {
-  const queryClient = new QueryClient();
+export const useSavePost = ({ setPostSaved }: UseSavePostProps) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation<{ saved: boolean }, AxiosError, SavePostService>({
     mutationFn: savePost,
@@ -34,9 +32,6 @@ export const useSavePost = ({
 
       toast('Failed to save post. Pleas try again later');
 
-      if (useRefetch && setTriggerRefetch) {
-        setTriggerRefetch(false);
-      }
       return;
     },
     onSuccess() {
@@ -44,20 +39,12 @@ export const useSavePost = ({
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['user-posts', 10] });
-
-      if (useRefetch && setTriggerRefetch) {
-        setTriggerRefetch(true);
-      }
     },
   });
 };
 
-export const useUnsavePost = ({
-  setPostSaved,
-  setTriggerRefetch,
-  useRefetch = false,
-}: UseSavePostProps) => {
-  const queryClient = new QueryClient();
+export const useUnsavePost = ({ setPostSaved }: UseSavePostProps) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation<{ saved: boolean }, AxiosError, SavePostService>({
     mutationFn: unsavePost,
@@ -75,9 +62,6 @@ export const useUnsavePost = ({
 
       toast('Failed to save post. Pleas try again later');
 
-      if (useRefetch && setTriggerRefetch) {
-        setTriggerRefetch(false);
-      }
       return;
     },
     onSuccess: () => {
@@ -85,10 +69,6 @@ export const useUnsavePost = ({
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['user-posts', 10] });
-
-      if (useRefetch && setTriggerRefetch) {
-        setTriggerRefetch(true);
-      }
     },
   });
 };

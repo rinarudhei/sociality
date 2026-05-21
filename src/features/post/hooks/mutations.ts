@@ -1,4 +1,4 @@
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { uploadPost } from '../services/post';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -6,7 +6,7 @@ import { X } from 'lucide-react';
 import { ShowSuccessToast } from '../components/successToast';
 
 export const useUploadPost = (username: string) => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation({
     mutationFn: uploadPost,

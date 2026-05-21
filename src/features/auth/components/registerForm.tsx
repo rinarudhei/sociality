@@ -62,7 +62,7 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
           control={registerForm.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor='form-login-email'>Name</FieldLabel>
+              <FieldLabel htmlFor='form-login-email'>Email</FieldLabel>
               <Input
                 {...field}
                 id='form-login-email'

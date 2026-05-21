@@ -35,14 +35,10 @@ export const PostMenuButtons = ({
   const [commentCountClient, setCommentCountClient] =
     React.useState(commentCount);
 
-  const [triggerFetchLikes, setTriggerFetchLikes] = React.useState(false);
-  const [triggerFetchComments, setTriggerFetchComments] = React.useState(false);
-
   const { mutate } = useLikeAPost(
     {
       setLikeCount: setLikeCountClient,
       setLikedByMe: setLikedByMeClient,
-      setTriggerFetch: setTriggerFetchLikes,
     },
     id
   );
@@ -51,7 +47,6 @@ export const PostMenuButtons = ({
     {
       setLikeCount: setLikeCountClient,
       setLikedByMe: setLikedByMeClient,
-      setTriggerFetch: setTriggerFetchLikes,
     },
     id
   );
@@ -92,11 +87,7 @@ export const PostMenuButtons = ({
               />
             </svg>
           </div>
-          <ViewLikes
-            id={id}
-            triggerFetch={triggerFetchLikes}
-            setTriggerFetch={setTriggerFetchLikes}
-          >
+          <ViewLikes id={id}>
             <p className='cursor-pointer'>{likeCountClient}</p>
           </ViewLikes>
         </div>
@@ -104,8 +95,6 @@ export const PostMenuButtons = ({
           setCommentCount={setCommentCountClient}
           imageUrl={imageUrl}
           author={author}
-          triggerFetch={triggerFetchComments}
-          setTriggerFetch={setTriggerFetchComments}
           id={id}
           caption={caption}
           uploadedAt={createdAt}
@@ -113,8 +102,6 @@ export const PostMenuButtons = ({
           likedByMeClient={likedByMeClient}
           setLikeCountClient={setLikeCountClient}
           setLikedByMeClient={setLikedByMeClient}
-          triggerFetchLikes={triggerFetchLikes}
-          setTriggerFetchLikes={setTriggerFetchLikes}
           commentCountClient={commentCountClient}
         >
           <div className='flex cursor-pointer items-center gap-1.5'>

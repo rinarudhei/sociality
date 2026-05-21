@@ -1,4 +1,4 @@
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { followUser, patchProfile, unfollowUser } from '../services/commands';
 import {
   FollowUserParams,
@@ -19,22 +19,14 @@ import {
 
 export const useFollowUser = (props: UseFollowUserProps) => {
   const router = useRouter();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   return useMutation<FollowUserResponse, AxiosError, FollowUserParams, void>({
     mutationFn: followUser,
     onMutate: (params) => {},
     onSuccess: (_, variables) => {
-      if (props.id) {
-        props.setTriggerRefetch(true);
-      }
-
       toast.success(`You are following ${variables.username}`);
     },
     onError: (e) => {
-      if (props.id) {
-        props.setTriggerRefetch(false);
-      }
-
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
         router.push('/auth');
@@ -53,21 +45,14 @@ export const useFollowUser = (props: UseFollowUserProps) => {
 
 export const useUnfollowUser = (props: UseFollowUserProps) => {
   const router = useRouter();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   return useMutation<FollowUserResponse, AxiosError, FollowUserParams, void>({
     mutationFn: unfollowUser,
     onMutate: (params) => {},
     onSuccess: (_, variables) => {
-      if (props.id) {
-        props.setTriggerRefetch(true);
-      }
-
       toast.success(`You just unfollowed ${variables.username}`);
     },
     onError: (e) => {
-      if (props.id) {
-        props.setTriggerRefetch(false);
-      }
       if (e.status === HttpStatusCode.Unauthorized) {
         toast.error('Please login first');
         router.push('/auth');
@@ -84,7 +69,7 @@ export const useUnfollowUser = (props: UseFollowUserProps) => {
 export const usePatchProfile = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   return useMutation<
     PatchProfileResponse,
     AxiosError,
@@ -117,7 +102,6 @@ export const usePatchProfile = () => {
 
     onSettled: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user', data?.username] });
-      router.push('/profile/' + data?.username + '/?useRefetch=true');
     },
   });
 };

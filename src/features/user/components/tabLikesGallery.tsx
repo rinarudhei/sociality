@@ -16,7 +16,6 @@ export const TabLikedGallery = () => {
     isPending,
     isFetching,
     isFetchingNextPage,
-    refetch,
     hasNextPage,
     fetchNextPage,
   } = useGetLikedPosts({ page: 1, limit: 10, username: params.username });

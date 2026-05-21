@@ -1,4 +1,8 @@
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { SetStateAction } from 'react';
 import { toast } from 'sonner';
 import { addPostComment, deleteComment } from '../services/comments';
@@ -8,17 +12,15 @@ import {
   DeleteCommentResponse,
 } from '../types/comments';
 import { AxiosError, HttpStatusCode } from 'axios';
-import { useRouter } from 'next/router';
 
 export const useAddComment = (
   actions: {
     setCommentCount: React.Dispatch<SetStateAction<number>>;
-    setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
     setTextComment: React.Dispatch<SetStateAction<string>>;
   },
   id: number
 ) => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation<
     AddPostCommentResponse,
@@ -40,7 +42,6 @@ export const useAddComment = (
     },
     onSuccess: () => {
       actions.setTextComment('');
-      actions.setTriggerFetch(true);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', id, 4] });
@@ -51,11 +52,10 @@ export const useAddComment = (
 export const useDeleteComment = (
   actions: {
     setCommentCount: React.Dispatch<SetStateAction<number>>;
-    setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
   },
   id: number
 ) => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation<
     DeleteCommentResponse,
@@ -66,7 +66,6 @@ export const useDeleteComment = (
     mutationFn: deleteComment,
     onMutate: () => {
       actions.setCommentCount((prev) => prev - 1);
-      actions.setTriggerFetch(true);
     },
     onError: (e) => {
       actions.setCommentCount((prev) => prev + 1);
@@ -76,9 +75,7 @@ export const useDeleteComment = (
         toast.error('Failed to delete a comment. Please try again later');
       }
     },
-    onSuccess: () => {
-      actions.setTriggerFetch(true);
-    },
+    onSuccess: () => {},
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ['comments', id] });
     },

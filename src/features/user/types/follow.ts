@@ -12,6 +12,5 @@ export type FollowUserResponse = {
 export type UseFollowUserProps =
   | {
       id: number;
-      setTriggerRefetch: React.Dispatch<SetStateAction<boolean>>;
     }
   | { id: null };

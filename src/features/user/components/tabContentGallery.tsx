@@ -17,7 +17,6 @@ export const TabContentGallery = () => {
     isPending,
     isFetching,
     isFetchingNextPage,
-    refetch,
     hasNextPage,
     fetchNextPage,
   } = useGetPostsByUsername({ username, page: 1, limit: 10 });
