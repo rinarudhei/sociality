@@ -13,16 +13,9 @@ import { LikesList } from './likesList';
 type ViewLikesProps = {
   children: React.ReactNode;
   id: number;
-  triggerFetch: boolean;
-  setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
 };
 
-export const ViewLikes = ({
-  children,
-  id,
-  triggerFetch,
-  setTriggerFetch,
-}: ViewLikesProps) => {
+export const ViewLikes = ({ children, id }: ViewLikesProps) => {
   const [isOpen, setisOpen] = React.useState(false);
   return (
     <Sheet open={isOpen} onOpenChange={setisOpen}>
@@ -36,12 +29,7 @@ export const ViewLikes = ({
                 List of user who likes this post
               </VisuallyHidden.Root>
             </SheetDescription>
-            <LikesList
-              id={id}
-              isOpen={isOpen}
-              setTriggerFetch={setTriggerFetch}
-              triggerFetch={triggerFetch}
-            />
+            <LikesList id={id} isOpen={isOpen} />
           </div>
         </div>
       </SheetContent>

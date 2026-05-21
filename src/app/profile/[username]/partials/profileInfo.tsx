@@ -1,4 +1,4 @@
-'use clinet';
+'use client';
 import ErrorMessage from '@/components/container/errorMessage';
 import { MetricBox } from '@/components/container/metricBox';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -22,25 +22,19 @@ import Link from 'next/link';
 
 export const ProfileInfo = () => {
   const { username } = useParams<{ username: string }>();
-  const searchParams = useSearchParams();
-  const useRefetch = searchParams.get('useRefetch');
   const auth = useAppSelector((state) => state.auth);
   const user = useAppSelector((state) => state.user);
   const {
     data: userData,
     isPending: isUserDataPending,
     isError: isUserDataError,
-    refetch,
   } = useGetUserByUsername({ username, token: auth.token });
-  const [triggerFetch, setTriggerRefetch] = React.useState(false);
 
   const { mutate } = useFollowUser({
     id: userData ? userData.id : null,
-    setTriggerRefetch,
   });
   const { mutate: mutateUnfollow } = useUnfollowUser({
     id: userData ? userData.id : null,
-    setTriggerRefetch,
   });
 
   const handleFollowUser = (username: string) => {
@@ -51,17 +45,6 @@ export const ProfileInfo = () => {
     mutateUnfollow({ token: auth.token, username });
   };
 
-  React.useEffect(() => {
-    if (triggerFetch) {
-      refetch();
-      setTriggerRefetch(false);
-    }
-  }, [triggerFetch, refetch]);
-  React.useEffect(() => {
-    if (useRefetch) {
-      refetch();
-    }
-  }, [useRefetch]);
   return isUserDataError ? (
     <ErrorMessage errorMessage='Error loading user data' />
   ) : isUserDataPending ? (

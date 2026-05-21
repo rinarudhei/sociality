@@ -15,7 +15,6 @@ export const TabContentSaved = () => {
     isPending,
     isFetching,
     isFetchingNextPage,
-    refetch,
     hasNextPage,
     fetchNextPage,
     isRefetching,
@@ -29,10 +28,6 @@ export const TabContentSaved = () => {
     },
     { root: null, rootMargin: '200px', threshold: 1.0, triggerOnce: false }
   );
-
-  React.useEffect(() => {
-    refetch();
-  }, [refetch]);
 
   return isError ? (
     <ErrorMessage errorMessage='Failed loading posts' />

@@ -9,21 +9,14 @@ import { useOnInView } from 'react-intersection-observer';
 import { useGetCommentsByPostId } from '../hooks/queries';
 import { Separator } from '@/components/ui/separator';
 import ErrorMessage from '@/components/container/errorMessage';
-import dayjs from 'dayjs';
 import Link from 'next/link';
+import { isPending } from '@reduxjs/toolkit';
 
 type CommentListProps = {
   id: number;
   isOpen: boolean;
-  triggerFetch: boolean;
-  setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
 };
-export const CommentList = ({
-  isOpen,
-  triggerFetch,
-  setTriggerFetch,
-  id,
-}: CommentListProps) => {
+export const CommentList = ({ isOpen, id }: CommentListProps) => {
   const {
     data,
     isPending,
@@ -32,7 +25,6 @@ export const CommentList = ({
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-    refetch,
   } = useGetCommentsByPostId({ id, page: 1, limit: 4 }, isOpen);
 
   const trackingRef = useOnInView(
@@ -43,13 +35,6 @@ export const CommentList = ({
     },
     { root: null, rootMargin: '200px', threshold: 1.0, triggerOnce: false }
   );
-
-  React.useEffect(() => {
-    if (isOpen && triggerFetch) {
-      setTriggerFetch(false);
-      refetch();
-    }
-  }, [isOpen, triggerFetch, refetch]);
 
   return isError ? (
     <ErrorMessage errorMessage='Failed loading user data' />

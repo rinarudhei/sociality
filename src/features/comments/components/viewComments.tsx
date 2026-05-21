@@ -28,28 +28,21 @@ import Link from 'next/link';
 type ViewCommentsProps = {
   children: React.ReactNode;
   id: number;
-  triggerFetch: boolean;
-  setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
   setCommentCount: React.Dispatch<SetStateAction<number>>;
   author: Author;
   uploadedAt: string;
   caption: string;
   imageUrl: string;
-
   likeCountClient: number;
   likedByMeClient: boolean;
   setLikeCountClient: React.Dispatch<SetStateAction<number>>;
   setLikedByMeClient: React.Dispatch<SetStateAction<boolean>>;
-  setTriggerFetchLikes: React.Dispatch<SetStateAction<boolean>>;
-  triggerFetchLikes: boolean;
   commentCountClient: number;
 };
 
 export const ViewComments = ({
   children,
   id,
-  triggerFetch,
-  setTriggerFetch,
   setCommentCount,
   author,
   uploadedAt,
@@ -59,17 +52,12 @@ export const ViewComments = ({
   likedByMeClient,
   setLikeCountClient,
   setLikedByMeClient,
-  setTriggerFetchLikes,
-  triggerFetchLikes,
   commentCountClient,
 }: ViewCommentsProps) => {
   const auth = useAppSelector((state) => state.auth);
   const [isOpen, setisOpen] = React.useState(false);
   const [textComment, setTextComment] = React.useState('');
-  const { mutate } = useAddComment(
-    { setCommentCount, setTriggerFetch, setTextComment },
-    id
-  );
+  const { mutate } = useAddComment({ setCommentCount, setTextComment }, id);
 
   const handleSubmit = () => {
     mutate({ id, text: textComment, token: auth.token });
@@ -142,12 +130,7 @@ export const ViewComments = ({
                 List of user who comments on this post
               </VisuallyHidden.Root>
             </SheetDescription>
-            <CommentList
-              isOpen={isOpen}
-              triggerFetch={triggerFetch}
-              setTriggerFetch={setTriggerFetch}
-              id={id}
-            />
+            <CommentList isOpen={isOpen} id={id} />
           </div>
 
           {/* Insert Comment Box: Only if user is logged in */}
@@ -156,12 +139,10 @@ export const ViewComments = ({
               <PostMenuButtonInComment
                 id={id}
                 commentCountClient={commentCountClient}
-                triggerFetchLikes={triggerFetchLikes}
                 likeCountClient={likeCountClient}
                 likedByMeClient={likedByMeClient}
                 setLikeCountClient={setLikeCountClient}
                 setLikedByMeClient={setLikedByMeClient}
-                setTriggerFetchLikes={setTriggerFetchLikes}
               />
               <CommentInput
                 textComment={textComment}

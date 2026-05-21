@@ -1,8 +1,4 @@
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { likeAPost, unlikeAPost } from '../services/likes';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -15,12 +11,11 @@ export const useLikeAPost = (
   actions: {
     setLikedByMe: React.Dispatch<SetStateAction<boolean>>;
     setLikeCount: React.Dispatch<SetStateAction<number>>;
-    setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
   },
   id: number
 ) => {
   const router = useRouter();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation<
     LikeAPostResponse,
@@ -32,7 +27,6 @@ export const useLikeAPost = (
     onMutate: () => {
       actions.setLikeCount((prev) => prev + 1);
       actions.setLikedByMe(true);
-      actions.setTriggerFetch(true);
     },
     onError: (e) => {
       actions.setLikedByMe(false);
@@ -54,12 +48,11 @@ export const useUnlikeAPost = (
   actions: {
     setLikedByMe: React.Dispatch<SetStateAction<boolean>>;
     setLikeCount: React.Dispatch<SetStateAction<number>>;
-    setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
   },
   id: number
 ) => {
   const router = useRouter();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation<
     LikeAPostResponse,
@@ -82,9 +75,7 @@ export const useUnlikeAPost = (
         toast.error('Failed to unlike a post. Please try again later');
       }
     },
-    onSuccess: () => {
-      actions.setTriggerFetch(true);
-    },
+    onSuccess: () => {},
     onSettled: async () => {
       queryClient.invalidateQueries({ queryKey: ['likes', id] });
     },

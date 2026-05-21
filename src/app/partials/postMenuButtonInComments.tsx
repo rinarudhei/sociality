@@ -13,8 +13,6 @@ type PostMenuButtonInCommentProps = {
   likeCountClient: number;
   setLikeCountClient: React.Dispatch<SetStateAction<number>>;
   commentCountClient: number;
-  triggerFetchLikes: boolean;
-  setTriggerFetchLikes: React.Dispatch<SetStateAction<boolean>>;
 };
 
 export const PostMenuButtonInComment = ({
@@ -24,8 +22,6 @@ export const PostMenuButtonInComment = ({
   likeCountClient,
   setLikeCountClient,
   commentCountClient,
-  triggerFetchLikes,
-  setTriggerFetchLikes,
 }: PostMenuButtonInCommentProps) => {
   const auth = useAppSelector((state) => state.auth);
 
@@ -33,7 +29,6 @@ export const PostMenuButtonInComment = ({
     {
       setLikeCount: setLikeCountClient,
       setLikedByMe: setLikedByMeClient,
-      setTriggerFetch: setTriggerFetchLikes,
     },
     id
   );
@@ -42,7 +37,6 @@ export const PostMenuButtonInComment = ({
     {
       setLikeCount: setLikeCountClient,
       setLikedByMe: setLikedByMeClient,
-      setTriggerFetch: setTriggerFetchLikes,
     },
     id
   );
@@ -84,11 +78,7 @@ export const PostMenuButtonInComment = ({
               />
             </svg>
           </div>
-          <ViewLikes
-            id={id}
-            triggerFetch={triggerFetchLikes}
-            setTriggerFetch={setTriggerFetchLikes}
-          >
+          <ViewLikes id={id}>
             <p className='cursor-pointer'>{likeCountClient}</p>
           </ViewLikes>
         </div>

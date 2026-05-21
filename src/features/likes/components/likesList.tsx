@@ -17,17 +17,9 @@ import {
 type LikesList = {
   id: number;
   isOpen: boolean;
-  setTriggerFetch: React.Dispatch<SetStateAction<boolean>>;
-  triggerFetch: boolean;
 };
 
-export const LikesList = ({
-  isOpen,
-  id,
-  setTriggerFetch,
-  triggerFetch,
-}: LikesList) => {
-  const [triggerRefetchLikes, setTriggerRefetchLikes] = React.useState(false);
+export const LikesList = ({ isOpen, id }: LikesList) => {
   const auth = useAppSelector((state) => state.auth);
   const {
     data,
@@ -37,17 +29,14 @@ export const LikesList = ({
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-    refetch,
     isRefetching,
   } = useGetLikesByPostId({ id, page: 1, limit: 6 }, auth.token, isOpen);
 
   const { mutate } = useFollowUser({
     id,
-    setTriggerRefetch: setTriggerRefetchLikes,
   });
   const { mutate: mutateUnfollow } = useUnfollowUser({
     id,
-    setTriggerRefetch: setTriggerRefetchLikes,
   });
 
   const trackingRef = useOnInView(
@@ -58,16 +47,6 @@ export const LikesList = ({
     },
     { root: null, rootMargin: '200px', threshold: 1.0, triggerOnce: false }
   );
-
-  React.useEffect(() => {
-    if (isOpen && triggerFetch) {
-      setTriggerFetch(false);
-      refetch();
-    } else if (isOpen && triggerRefetchLikes) {
-      setTriggerRefetchLikes(false);
-      refetch();
-    }
-  }, [isOpen, triggerFetch, refetch, triggerRefetchLikes]);
 
   const handleFollowUser = (username: string) => {
     mutate({ token: auth.token, username });
